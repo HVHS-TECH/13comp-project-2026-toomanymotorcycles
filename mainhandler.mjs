@@ -14,7 +14,7 @@ const firebaseConfig = {
 };
 
 var currentDeletionTimeout, app, analytics, auth, google, db, initialised = false;
-try {
+function init() {
     console.info("-------------------------------------\n--- CHAOS DATABASE SOLUTIONS V1.0 ---\n------ COPYRIGHT OF CHAOS INC. ------\n-------------------------------------");
     console.log("CDS: Initialising...");
     globalThis.user = undefined;
@@ -23,7 +23,12 @@ try {
     db = getFirestore(app);
     auth = getAuth();
     google = new GoogleAuthProvider();
+    document.getElementById("loading").setAttribute("hidden",true);
+    document.getElementById("page").removeAttribute("hidden");
     console.log("CDS: Initialisation complete.");
+}
+try {
+    init();
 } catch (err) {
     console.error(`-!- CDS FATAL ERROR -!-\nInitialisation FAILED\n${err}`);
 };

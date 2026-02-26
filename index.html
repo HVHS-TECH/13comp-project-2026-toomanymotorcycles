@@ -12,6 +12,89 @@
             }
         </style>
     </noscript>
+    <style>
+        body {
+                font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            }
+        .centered {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 500px;
+        }
+        #loading {
+            text-align: center;
+        }
+        .title {
+            text-align: center;
+            background-image: linear-gradient(rgb(255, 225, 180),rgb(255, 180, 68));
+            padding: 0%;
+            padding-top: 5%;
+        }
+        .title > h1 {
+            font-size: 100px;
+            line-height: 0%;
+        }
+        .shadow {
+            background-image: linear-gradient(rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.5));
+            margin: 0px;
+        }
+        .accHandler {
+            text-align: center;
+            padding: 10%;
+        }
+        .accHandler > a {
+            color: gray;
+            margin: 10px;
+        }
+        .accHandler > a:hover {
+            color: rgb(173, 170, 170);
+            margin: 10px;
+        }
+        .accHandler > a:active {
+            color: rgb(73, 73, 73);
+            margin: 10px;
+        }
+        #signup-button {
+            color: white;
+            background-color: rgb(255, 153, 0);
+            font-size: large;
+            padding: 15px;
+            width: 50%;
+            border-radius: 5px;
+            border: 0px;
+
+        }
+        #signup-button:hover {
+            color: white;
+            background-color: rgb(255, 182, 73);
+            font-size: large;
+            padding: 15px;
+            width: 50%;
+            border-radius: 5px;
+            border: 0px;
+
+        }
+        #signup-button:active {
+            color: white;
+            background-color: rgb(133, 96, 40);
+            font-size: large;
+            padding: 15px;
+            width: 50%;
+            border-radius: 5px;
+            border: 0px;
+
+        }
+        .footer {
+            display: absolute;
+            background-color: rgb(160, 160, 160);
+            bottom: 0;
+        }
+        .footer > p {
+            padding: 1%;
+            font-size: x-small;
+        }
+    </style>
     <script src="mainhandler.mjs" type="module"></script>
 </head>
 <body>
@@ -21,5 +104,59 @@
         <p>Please allow JavaScript execution to continue.</p>
         <img src="banner2.png" width="200" height="100">
     </noscript>
+    <div id="loading">
+        <div class="centered">
+            <div>
+            <img src="loading.gif">
+            <h3>Connecting, please wait...</h3>
+            </div>
+        </div>
+    </div>
+    <div id="page" hidden>
+        <div class="title">
+            <h1>Chaos Games</h1>
+            <p>The only game manager you'll ever need.</p>
+            <div class="shadow"><br></div>
+        </div>
+        <hr>
+        <div class="accHandler">
+            <button id="signup-button"><b>Sign up</b></button>
+            <br>
+            <a href="#">Already have an account? Log in here.</a>
+        </div>
+        <hr>
+        <div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
+        <div class="footer">
+            <p>Use of this service is at your own risk. Chaos Technologies Inc. is not responsible for any personal data lost in the event that we experience a data breach.<br>For more information, visit our main site at www.nonexistent.com</p>
+            <img src="banner2.png" width="200" height="100">
+            <hr>
+            <p>© Chaos Technologies Inc. (2026)</p>
+        </div>
+    </div>
 </body>
 </html>
