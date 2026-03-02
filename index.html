@@ -15,6 +15,7 @@
     <style>
         body {
                 font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                background-color: rgb(20, 20, 20);
             }
         .centered {
             display: flex;
@@ -27,9 +28,10 @@
         }
         .title {
             text-align: center;
-            background-image: linear-gradient(rgb(255, 225, 180),rgb(255, 180, 68));
+            background-image: linear-gradient(rgb(80, 0, 126),rgb(0, 12, 124));
             padding: 0%;
             padding-top: 5%;
+            height: 100vh;
         }
         .title > h1 {
             font-size: 100px;
@@ -40,8 +42,13 @@
             margin: 0px;
         }
         .accHandler {
+            background-color: rgb(20, 20, 20);
             text-align: center;
             padding: 10%;
+            position: relative;
+            z-index: 999;
+            box-shadow: 0px -20px 100px;
+            margin: 0px;
         }
         .accHandler > a {
             color: gray;
@@ -57,7 +64,7 @@
         }
         #signup-button {
             color: white;
-            background-color: rgb(255, 153, 0);
+            background-image: linear-gradient(45deg,rgb(80, 0, 126),rgb(0, 12, 124));
             font-size: large;
             padding: 15px;
             width: 50%;
@@ -67,7 +74,7 @@
         }
         #signup-button:hover {
             color: white;
-            background-color: rgb(255, 182, 73);
+            background-image: linear-gradient(-45deg,rgb(80, 0, 126),rgb(0, 12, 124));
             font-size: large;
             padding: 15px;
             width: 50%;
@@ -76,8 +83,8 @@
 
         }
         #signup-button:active {
-            color: white;
-            background-color: rgb(133, 96, 40);
+            color: rgb(78, 78, 78);
+            background-image: linear-gradient(-45deg,rgb(51, 0, 80),rgb(0, 6, 61));
             font-size: large;
             padding: 15px;
             width: 50%;
@@ -87,8 +94,10 @@
         }
         .footer {
             display: absolute;
-            background-color: rgb(160, 160, 160);
+            background-color: rgb(10, 10, 10);
+            color:white;
             bottom: 0;
+            margin: -10;
         }
         .footer > p {
             padding: 1%;
@@ -114,42 +123,41 @@
     </div>
     <div id="page" hidden>
         <div class="title">
-            <h1>Chaos Games</h1>
-            <p>The only game manager you'll ever need.</p>
-            <div class="shadow"><br></div>
+            <h1 style="position: fixed; justify-self: center; z-index: 0;">{logo}</h1>
+            <p style="position: fixed; justify-self: center; z-index: 0;">The only game manager you'll ever need.</p>
         </div>
-        <hr>
         <div class="accHandler">
+            <hr>
             <button id="signup-button"><b>Sign up</b></button>
             <br>
             <a href="#">Already have an account? Log in here.</a>
+            <hr>
+            <div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
         </div>
-        <hr>
-        <div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
         </div>
         <div class="footer">
             <p>Use of this service is at your own risk. Chaos Technologies Inc. is not responsible for any personal data lost in the event that we experience a data breach.<br>For more information, visit our main site at www.nonexistent.com</p>
