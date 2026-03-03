@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alumni+Sans+Pinstripe:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alef:wght@400;700&display=swap" rel="stylesheet">
     <noscript>
         <style>
             body {
@@ -14,8 +20,9 @@
     </noscript>
     <style>
         body {
-                font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                font-family: "Darker Grotesque", sans-serif;
                 background-color: rgb(20, 20, 20);
+                color: white;
             }
         .centered {
             display: flex;
@@ -27,6 +34,7 @@
             text-align: center;
         }
         .title {
+            font-family: "Alumni Sans Pinstripe", sans-serif;
             text-align: center;
             background-image: linear-gradient(rgb(80, 0, 126),rgb(0, 12, 124));
             padding: 0%;
@@ -37,18 +45,27 @@
             font-size: 100px;
             line-height: 0%;
         }
-        .shadow {
-            background-image: linear-gradient(rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.5));
+        .overlay {
+            background-color: rgb(20, 20, 20);
+            position: relative;
+            z-index: 999;
+            box-shadow: 0px -20px 100px 20px black;
             margin: 0px;
+        }
+        .section {
+            background-color: rgb(10, 10, 10);
+            border-radius: 5px;
+            margin: 20px;
+            padding: 20px;
+        }
+        .section h3 {
+            font-family: "Atkinson Hyperlegible Mono", sans-serif;
+            font-weight: lighter;
         }
         .accHandler {
             background-color: rgb(20, 20, 20);
             text-align: center;
             padding: 10%;
-            position: relative;
-            z-index: 999;
-            box-shadow: 0px -20px 100px;
-            margin: 0px;
         }
         .accHandler > a {
             color: gray;
@@ -97,7 +114,7 @@
             background-color: rgb(10, 10, 10);
             color:white;
             bottom: 0;
-            margin: -10;
+            margin: 0;
         }
         .footer > p {
             padding: 1%;
@@ -123,47 +140,35 @@
     </div>
     <div id="page" hidden>
         <div class="title">
-            <h1 style="position: fixed; justify-self: center; z-index: 0;">{logo}</h1>
+            <h1 style="position: fixed; justify-self: center; z-index: 0; font-size: 400px;">GALAXY</h1>
             <p style="position: fixed; justify-self: center; z-index: 0;">The only game manager you'll ever need.</p>
         </div>
-        <div class="accHandler">
-            <hr>
-            <button id="signup-button"><b>Sign up</b></button>
+        <div class="overlay">
             <br>
-            <a href="#">Already have an account? Log in here.</a>
-            <hr>
-            <div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-        </div>
+            <div class="section">
+                <h1>Endless games, at your fingertips.</h1>
+                <h3>TODO</h3>
+            </div>
+            <div class="section">
+                <h1>Infinite possibility.</h1>
+                <h3>Our library is designed to be expandable, allowing you to add any game by simply exposing its data to our API.</h3>
+            </div>
+            <div class="section">
+                <h1>Privacy, guaranteed.</h1>
+                <h3>We only share your data with your consent, and we never share it with advertising agencies.</h3>
+            </div>
+            <div class="accHandler">
+                <h1>Begin your journey.</h1>
+                <button id="signup-button"><b>Sign up</b></button>
+                <br><br>
+                <a href="#">Already have an account? Log in here.</a>
+            </div>
         </div>
         <div class="footer">
-            <p>Use of this service is at your own risk. Chaos Technologies Inc. is not responsible for any personal data lost in the event that we experience a data breach.<br>For more information, visit our main site at www.nonexistent.com</p>
+            <p>Use of this service is at your own risk. Chaos Technologies Inc. is not responsible for any personal data lost in the event that we experience a data breach, any such complaints relating to this matter are void.<br>If our servers are damaged, destroyed, or otherwise disabled, you may lose some or all saved information, including, but not limited to, game records, high scores, personal information associated with your account, and some or all security data related to your account.<br>Upon signing up, you hereby give up your soul to us, and agree that we may use your soul for any purpose that we see fit, including, but not limited to, deals with Satan or any other dark deity, research on the nature of human souls, or consumption by senior management.<br>For more information, visit our main site at <a href="https://www.example.com/">www.nonexistent.com</a></p>
             <img src="banner2.png" width="200" height="100">
             <hr>
-            <p>© Chaos Technologies Inc. (2026)</p>
+            <p>© Chaos Technologies Inc. (2026)<br>Unauthorised replication of our software or unauthorised performance of any other copyright-protected acts is prohibited by law.</p>
         </div>
     </div>
 </body>
