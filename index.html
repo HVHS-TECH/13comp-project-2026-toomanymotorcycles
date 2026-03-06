@@ -7,18 +7,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alef:wght@400;700&display=swap" rel="stylesheet">
-    <noscript>
-        <style>
-            body {
-                text-align: center;
-                font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            }
-            h2 {
-                color:indianred;
-            }
-        </style>
-    </noscript>
     <style>
+        @keyframes signup-button-anim {
+            from {background-position: 0%; transform: scale(1.0);}
+            to {background-position: 50%; transform: scale(1.1);}
+        }
+        @keyframes signup-button-anim-rev {
+            from {background-position: 50%; transform: scale(1.1);}
+            to {background-position: 0%; transform: scale(1.0);}
+        }
+        @keyframes signup-button-anim-clk {
+            from {transform: scale(1.1);}
+            to {transform: scale(0.9);}
+        }
+        @keyframes signup-button-anim-clk-rev {
+            from {transform: scale(0.9);}
+            to {transform: scale(1.1);}
+        }
+
+
+        /**********************************************/
+
         body, html{
                 font-family: "Darker Grotesque", sans-serif;
                 background-color: rgb(20, 20, 20);
@@ -98,34 +107,28 @@
         #signup-button {
             color: white;
             background-image: linear-gradient(45deg,rgb(80, 0, 126),rgb(0, 12, 124));
+            background-size: 200%;
+            transform: scale(1.0);
             font-size: large;
             padding: 15px;
             margin: 0%;
             width: 50%;
             border-radius: 5px;
             border: 0px;
+            animation: signup-button-anim-rev 0.1s ease-in-out;
 
         }
         #signup-button:hover {
-            color: white;
-            background-image: linear-gradient(45deg,rgb(80, 0, 126) 35%,rgb(0, 12, 124));
-            font-size: large;
-            padding: 15px;
-            width: 50%;
-            border-radius: 5px;
-            border: 0px;
+            background-position: 50%;
+            transform: scale(1.1);
+            animation: signup-button-anim 0.1s ease-in-out;
 
         }
         #signup-button:active {
             color: rgb(78, 78, 78);
-            background-image: linear-gradient(45deg,rgb(51, 0, 80) 40%,rgb(0, 6, 61));
-            font-size: large;
-            padding: 15px;
-            margin: 0%;
-            width: 50%;
-            border-radius: 5px;
-            border: 0px;
-
+            background-image: linear-gradient(45deg,rgb(43, 0, 68),rgb(0, 7, 71));
+            transform: scale(0.9);
+            animation: signup-button-anim-clk 0.05s ease-in-out;
         }
         .footer {
             position: relative;
@@ -149,6 +152,18 @@
             padding: 1%;
         }
     </style>
+    <noscript>
+        <style>
+            html, body {
+                background-color: rgb(10, 10, 10);
+                text-align: center;
+                font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            }
+            h2 {
+                color:indianred;
+            }
+        </style>
+    </noscript>
     <script src="mainhandler.mjs" type="module"></script>
 </head>
 <body>
@@ -158,7 +173,7 @@
         <p>Please allow JavaScript execution to continue.</p>
         <img src="banner2.png" width="200" height="100">
     </noscript>
-    <div id="loading">
+    <div id="loading" hidden>
         <div class="centered">
             <div>
             <img src="loading.gif">
@@ -170,6 +185,7 @@
         <div class="title">
             <h1 style="position: fixed; justify-self: center; z-index: 0; font-size: 400px;">GALAXY</h1>
             <h2 style="position: fixed; justify-self: center; z-index: 0;">The only game manager you'll ever need.</p>
+            <img src="down.png" width="150" style="position: static; bottom: 0%;">
         </div>
         <div class="overlay">
             <br>
