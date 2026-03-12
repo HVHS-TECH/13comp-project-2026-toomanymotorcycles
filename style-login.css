@@ -1,20 +1,90 @@
-.login-section {
-    background-color: rgb(10, 10, 10);
-    border-radius: 5px;
-    margin: 20px;
-    padding: 20px;
+@keyframes signup-button-anim {
+    from {background-position: 0%; transform: scale(1.0);}
+    to {background-position: 50%; transform: scale(1.05);}
 }
-h1 {
-    margin: 0px;
+@keyframes signup-button-anim-rev {
+    from {background-position: 50%; transform: scale(1.05);}
+    to {background-position: 0%; transform: scale(1.0);}
+}
+@keyframes signup-button-anim-clk {
+    from {transform: scale(1.05);}
+    to {transform: scale(1.0);}
+}
+@keyframes signup-button-anim-clk-rev {
+    from {transform: scale(1.0);}
+    to {transform: scale(1.05);}
 }
 
+
+/**********************************************/
+
+h1 {
+    margin: 0px;
+    text-align: center;
+}
 input {
     color: white;
-    background-color: rgb(10, 10, 10);
+    background-color: transparent;
     font-size: large;
     font-family: "Darker Grotesque", sans-serif;
     margin: 5px;
     padding: 5px;
     border: 0px;
+    border-bottom: 1px dashed white;
+    width: 80%;
+}
+input:focus {
+    outline: none;
     border-bottom: 1px solid white;
+}
+button {
+    color: white;
+    font-family: "Darker Grotesque", sans-serif;
+    background-image: linear-gradient(45deg,rgb(80, 0, 126),rgb(0, 12, 124));
+    background-size: 200%;
+    transform: scale(1.0);
+    font-size: x-large;
+    padding: 10px;
+    margin: 0%;
+    width: 80%;
+    border-radius: 5px;
+    border: 0px;
+    animation: signup-button-anim-rev 0.1s ease-in-out;
+
+}
+button:hover {
+    background-position: 50%;
+    transform: scale(1.05);
+    animation: signup-button-anim 0.1s ease-in-out;
+
+}
+button:active {
+    color: rgb(78, 78, 78);
+    background-image: linear-gradient(45deg,rgb(43, 0, 68),rgb(0, 7, 71));
+    transform: scale(1.0);
+    animation: signup-button-anim-clk 0.05s ease-in-out;
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: max-content;
+    background-color: red;
+    height: auto;
+}
+.login-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(10, 10, 10);
+    border-radius: 5px;
+    margin: 0px;
+    padding: 20px;
+    width: 50%;
+    
+}
+#login-form {
+    width: 70%;
+    justify-items: center;
 }
