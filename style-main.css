@@ -3,12 +3,12 @@
         /**********************************************/
 
         body, html{
-                font-family: "Darker Grotesque", sans-serif;
-                background-color: rgb(20, 20, 20);
-                color: white;
-                margin: 0%;
-                padding: 0%;
-            }
+            font-family: "Darker Grotesque", sans-serif;
+            background-color: rgb(20, 20, 20);
+            color: white;
+            margin: 0%;
+            padding: 0%;
+        }
         .centered {
             display: flex;
             justify-content: center;

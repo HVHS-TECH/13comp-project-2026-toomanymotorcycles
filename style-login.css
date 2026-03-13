@@ -17,7 +17,6 @@
 
 
 /**********************************************/
-
 h1 {
     margin: 0px;
     text-align: center;
@@ -50,13 +49,11 @@ button {
     border-radius: 5px;
     border: 0px;
     animation: signup-button-anim-rev 0.1s ease-in-out;
-
 }
 button:hover {
     background-position: 50%;
     transform: scale(1.05);
     animation: signup-button-anim 0.1s ease-in-out;
-
 }
 button:active {
     color: rgb(78, 78, 78);
@@ -64,13 +61,15 @@ button:active {
     transform: scale(1.0);
     animation: signup-button-anim-clk 0.05s ease-in-out;
 }
+.page {
+    display: flex;
+    height: 100vh;
+}
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: max-content;
-    background-color: red;
-    height: auto;
+    height: 100%;
 }
 .login-section {
     display: flex;
@@ -79,7 +78,7 @@ button:active {
     flex-direction: column;
     background-color: rgb(10, 10, 10);
     border-radius: 5px;
-    margin: 0px;
+    margin: 20px;
     padding: 20px;
     width: 50%;
     

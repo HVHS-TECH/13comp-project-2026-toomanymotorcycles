@@ -34,3 +34,11 @@ try {
     console.error(`-!- CDS FATAL ERROR -!-\nInitialisation FAILED\n${err}`);
 
 };
+
+function loginViaGoogle() {
+    // TODO: Write and link to Sign In With Google button
+}
+
+function loginViaUserPasswd() {
+    // TODO: Write and link to username/password form
+}
