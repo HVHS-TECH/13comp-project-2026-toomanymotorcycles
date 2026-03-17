@@ -13,7 +13,7 @@ const firebaseConfig = {
     measurementId: "G-J1FZFCMSRE"
 };
 
-var app, analytics, userAuth, authProvider, db, initialised = false;
+var app, analytics, userAuthService, authProvider, db, initialised = false;
 function init() {
     console.info("-------------------------------------\n--- CHAOS DATABASE SOLUTIONS V1.0 ---\n------ COPYRIGHT OF CHAOS INC. ------\n-------------------------------------");
     console.log("CDS: Initialising...");
@@ -22,7 +22,7 @@ function init() {
     app = initializeApp(firebaseConfig);
     analytics = getAnalytics(app);
     db = getFirestore(app);
-    userAuth = getAuth();
+    userAuthService = getAuth();
     authProvider = new GoogleAuthProvider();
     document.getElementById("loading").setAttribute("hidden",true);
     document.getElementById("page").removeAttribute("hidden");
@@ -32,13 +32,35 @@ try {
     init();
 } catch (err) {
     console.error(`-!- CDS FATAL ERROR -!-\nInitialisation FAILED\n${err}`);
-
 };
 
-function loginViaGoogle() {
-    // TODO: Write and link to Sign In With Google button
+function toggleButtonState(button,active,textIfActive) {
+    if (active) {
+        button.innerHTML = textIfActive
+        button.className = ""
+        button.removeAttribute("disabled");
+    } else {
+        button.innerHTML = "<b>...</b>"
+        button.className = "button-awaiting"
+        button.setAttribute("disabled","true");
+    }
 }
 
-function loginViaUserPasswd() {
+function loginWithGoogle() {
+    toggleButtonState(document.getElementById("google-button"),false);
+    signInWithPopup(userAuthService, authProvider)
+        .then((authResult) => {
+            console.log(authResult);
+        }).catch((err) => {
+            document.getElementById("google-error").removeAttribute("hidden");
+            console.warn(`-!- CDS ERROR -!-\nAuthentication FAILED\n${err}`);
+            toggleButtonState(document.getElementById("google-button"),true,"<b>Sign in with Google</b>");
+        })
+}
+
+function loginWithUserPasswd() {
     // TODO: Write and link to username/password form
 }
+
+globalThis.loginWithGoogle = loginWithGoogle;
+globalThis.loginWithUserPasswd = loginWithUserPasswd;
