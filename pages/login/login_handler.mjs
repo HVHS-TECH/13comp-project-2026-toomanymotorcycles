@@ -22,8 +22,6 @@ function init() {
     app = initializeApp(firebaseConfig);
     analytics = getAnalytics(app);
     db = getFirestore(app);
-    userAuthService = getAuth();
-    authProvider = new GoogleAuthProvider();
     document.getElementById("loading").setAttribute("hidden",true);
     document.getElementById("page").removeAttribute("hidden");
     console.log("CDS: Initialisation complete.");
@@ -47,15 +45,22 @@ function toggleButtonState(button,active,textIfActive) {
 }
 
 function loginWithGoogle() {
+    const AUTH = getAuth();
+    const PROVIDER = new GoogleAuthProvider();
+    PROVIDER.setCustomParameters({
+        prompt: 'select_account'
+    });
+    console.log(AUTH);
+    console.log(PROVIDER);
     toggleButtonState(document.getElementById("google-button"),false);
-    signInWithPopup(userAuthService, authProvider)
-        .then((authResult) => {
-            console.log(authResult);
-        }).catch((err) => {
-            document.getElementById("google-error").removeAttribute("hidden");
-            console.warn(`-!- CDS ERROR -!-\nAuthentication FAILED\n${err}`);
-            toggleButtonState(document.getElementById("google-button"),true,"<b>Sign in with Google</b>");
-        })
+
+    signInWithPopup(AUTH, PROVIDER).then((authResult) => {
+        console.log(authResult);
+    }).catch((err) => {
+        document.getElementById("google-error").removeAttribute("hidden");
+        console.warn(`-!- CDS ERROR -!-\nAuthentication FAILED\n${err}`);
+        toggleButtonState(document.getElementById("google-button"),true,"<b>Sign in with Google</b>");
+    })
 }
 
 function loginWithUserPasswd() {
