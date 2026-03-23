@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
 import { getFirestore, collection as col, doc, addDoc, deleteDoc, getDoc as get, getDocs as getm, query, orderBy, limit, onSnapshot as onSnap, Timestamp, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
-import { getAuth, GoogleAuthProvider,  signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyA8eRtuze9y-JNH3Qe7kmMlvSBvvR860uU",
@@ -15,7 +15,7 @@ const firebaseConfig = {
 
 var app, analytics, userAuthService, authProvider, db, initialised = false;
 function init() {
-    console.info("-------------------------------------\n--- CHAOS DATABASE SOLUTIONS V1.0 ---\n------ COPYRIGHT OF CHAOS INC. ------\n-------------------------------------");
+    consol.info("-------------------------------------\n--- CHAOS DATABASE SOLUTIONS V1.0 ---\n------ COPYRIGHT OF CHAOS INC. ------\n-------------------------------------");
     console.log("CDS: Initialising...");
     document.getElementById("loading").removeAttribute("hidden");
     globalThis.user = undefined;
@@ -30,6 +30,8 @@ try {
     init();
 } catch (err) {
     console.error(`-!- CDS FATAL ERROR -!-\nInitialisation FAILED\n${err}`);
+    document.getElementById("loading-gif").setAttribute("src","./../../resources/resources_global/warning.png");
+    document.getElementById("loading-message").innerText = "A fatal error has occured, try again later.";
 };
 
 function toggleButtonState(button,active,textIfActive) {
@@ -53,7 +55,6 @@ function loginWithGoogle() {
     console.log(AUTH);
     console.log(PROVIDER);
     toggleButtonState(document.getElementById("google-button"),false);
-
     signInWithPopup(AUTH, PROVIDER).then((authResult) => {
         console.log(authResult);
     }).catch((err) => {
@@ -63,8 +64,32 @@ function loginWithGoogle() {
     })
 }
 
-function loginWithUserPasswd() {
-    // TODO: Write and link to username/password form
+function loginWithUserPasswd(email,passwd) {
+    const AUTH = getAuth();
+    
+    toggleButtonState(document.getElementById("login-button"),false);
+    signInWithEmailAndPassword(AUTH, email, passwd).then((userCredential) => {
+        console.log(userCredential);
+    }).catch((err) => {
+        var errorMessage = document.getElementById("userpass-error");
+        errorMessage.removeAttribute("hidden");
+        switch(err.code) {
+            case "auth/missing-email":
+               errorMessage.innerText = "Please enter your email and password.";
+               break;
+            case "auth/invalid-email":
+               errorMessage.innerText = "Invalid email.";
+               break;
+            case "auth/missing-password":
+               errorMessage.innerText = "Please enter your email and password.";
+               break;
+            case "auth/operation-not-allowed":
+               errorMessage.innerText = "Internal authentication error, try again later.";
+               break;
+        };
+        console.warn(`-!- CDS ERROR -!-\nAuthentication FAILED\n${err}`);
+        toggleButtonState(document.getElementById("login-button"),true,"<b>Login</b>");
+    });
 }
 
 globalThis.loginWithGoogle = loginWithGoogle;
