@@ -14,6 +14,14 @@
     from {transform: scale(1.0);}
     to {transform: scale(1.05);}
 }
+@keyframes remember-me-toggle-checkmark-appear {
+    from {transform: scale(0); opacity:0;}
+    to {transform: scale(1) rotate(45deg); opacity:1;}
+}
+@keyframes remember-me-toggle-checkmark-disappear {
+    from {transform: scale(1) rotate(45deg); opacity:1;}
+    to {transform: scale(0) rotate(90deg); opacity:0;}
+}
 
 
 /**********************************************/
@@ -106,4 +114,54 @@ button:active {
 #login-form {
     width: 70%;
     justify-items: center;
+}
+
+#remember-me-toggle {
+    appearance: none;
+    opacity: 0;
+    height: 18px;
+    width: 18px;
+}
+
+#remember-me-toggle + span {
+    display:inline-block;
+    height: 18px;
+    width: 18px;
+    border: 3px solid rgb(71, 71, 71);
+    border-radius: 3px;
+}
+
+#remember-me-toggle:checked + span {
+    border: 0px;
+    height: 23px;
+    width: 23px;
+    background-image: linear-gradient(45deg,rgb(80, 0, 126),rgb(0, 12, 124));
+}
+
+#remember-me-toggle + span::after {
+    content: "";
+    display: block;
+    opacity: 0;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+    margin-left: 8px;
+    margin-top: 4px;
+    animation: remember-me-toggle-checkmark-disappear 0.25s ease-in-out;
+} 
+
+#remember-me-toggle:checked + span::after {
+    content: "";
+    display: block;
+    opacity: 1;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+    margin-left: 8px;
+    margin-top: 4px;
+    animation: remember-me-toggle-checkmark-appear 0.25s ease-in-out;
 }

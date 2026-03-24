@@ -35,16 +35,23 @@
             <div>
             <img id="loading-gif" src="./../../resources/resources_global/loading.gif">
             <h3 id="loading-message">Connecting, please wait...</h3>
+            <p id="fatalerror-info" hidden>For more information, check the developer console.</h3>
             </div>
         </div>
     </div>
-    <div class="container" id="page" hidden>
+    <div class="container" id="page" style="display:none">
         <div class="login-section">
             <h1>Login</h1>
             <form id="login-form">
                 <input id="user-field" type="text" placeholder="Email">
                 <br>
                 <input id="passwd-field" type="password" placeholder="Password">
+                <br><br>
+                <label for="remember-me-toggle" style="display:flex;">
+                    Remember me
+                    <input id="remember-me-toggle" name="remember-me-toggle" type="checkbox">
+                    <span></span>
+                </label>
             </form>
             <br>
             <p class="error" id="userpass-error" hidden>Authentication failed.</p>
@@ -53,11 +60,11 @@
             <button id="google-button" onclick="loginWithGoogle()"><b>Sign in with Google</b></button>
             <p class="error" id="google-error" hidden>Internal authentication error, try again later.</p>
         </div>
-        <div class="footer" id="footer-absolute">
+    </div>
+    <div class="footer" id="footer-absolute">
             <p>Use of this service is at your own risk. Chaos Technologies Inc. is not responsible for any personal data lost in the event that we experience a data breach, any such complaints relating to this matter are void.<br>If our servers are damaged, destroyed, or otherwise disabled, you may lose some or all saved information, including, but not limited to, game records, high scores, personal information associated with your account, and some or all security data related to your account.<br>Upon signing up, you hereby give up your soul to us, and agree that we may use your soul for any purpose that we see fit, including, but not limited to, deals with Satan or any other dark deity, research on the nature of the human soul, or consumption by senior management.<br>For more information, visit our main site at <a href="https://www.example.com/">www.nonexistent.com</a></p>
             <img src="./../../resources/resources_global/banner2.png" width="200" height="100">
             <div><p>© Chaos Technologies Inc. (2026)<br>Unauthorised replication of our software or unauthorised performance of any other copyright-protected acts is prohibited by law.</p><p style="font-size: large;">Major Disclaimer: This is a joke - Chaos Technologies Inc. does not actually exist.</p></div>
         </div>
-    </div>
 </body>
 </html>
