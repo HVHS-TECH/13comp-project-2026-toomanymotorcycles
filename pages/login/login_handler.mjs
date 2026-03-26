@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
 import { getFirestore, collection as col, doc, addDoc, deleteDoc, getDoc as get, getDocs as getm, query, orderBy, limit, onSnapshot as onSnap, Timestamp, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
-import { getAuth, setPersistence, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, setPersistence, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCNRUASOXGQabiR8LGBzKP6BDSEEAHdTR8",
@@ -62,7 +62,7 @@ function loginWithGoogle() {
     signInWithPopup(AUTH, PROVIDER).then((authResult) => {
         console.log(authResult);
     }).catch((err) => {
-        document.getElementById("google-error").removeAttribute("hidden");
+        if (err.code != "auth/popup-closed-by-user") {document.getElementById("google-error").removeAttribute("hidden");}
         console.warn(`-!- CDS ERROR -!-\nAuthentication FAILED\n${err}`);
         toggleButtonState(document.getElementById("google-button"),true,"<b>Sign in with Google</b>");
     })

@@ -147,8 +147,8 @@ button:active {
     border: solid white;
     border-width: 0 3px 3px 0;
     transform: rotate(45deg);
-    margin-left: 8px;
-    margin-top: 4px;
+    margin-left: 5px;
+    margin-top: 2px;
     animation: remember-me-toggle-checkmark-disappear 0.25s ease-in-out;
 } 
 
