@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
 import { getFirestore, collection as col, doc, addDoc, deleteDoc, getDoc as get, getDocs as getm, query, orderBy, limit, onSnapshot as onSnap, Timestamp, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
-import { getAuth, onAuthStateChanged, setPersistence, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, setPersistence,  browserSessionPersistence, browserLocalPersistence, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCNRUASOXGQabiR8LGBzKP6BDSEEAHdTR8",
@@ -22,6 +22,9 @@ function init() {
     app = initializeApp(firebaseConfig);
     analytics = getAnalytics(app);
     db = getFirestore(app);
+    const AUTH = getAuth();
+    setPersistence(AUTH,browserSessionPersistence);
+    console.log("CDS: Authentication Persistence set to 'session'")
     document.getElementById("loading").setAttribute("hidden",true);
     document.getElementById("page").removeAttribute("style");
     console.log("CDS: Initialisation complete.");
@@ -47,6 +50,17 @@ function toggleButtonState(button,active,textIfActive) {
         button.innerHTML = "<b>...</b>"
         button.className = "button-awaiting"
         button.setAttribute("disabled","true");
+    }
+}
+
+function rememberMeToggle() {
+    const AUTH = getAuth();
+    if (document.getElementById("remember-me-toggle").checked) {
+        setPersistence(AUTH,browserLocalPersistence);
+        console.log("CDS: Authentication Persistence set to 'local'")
+    } else {
+        setPersistence(AUTH,browserSessionPersistence);
+        console.log("CDS: Authentication Persistence set to 'session'")
     }
 }
 
@@ -99,5 +113,6 @@ function loginWithUserPasswd(email,passwd) {
     });
 }
 
+globalThis.rememberMeToggle = rememberMeToggle;
 globalThis.loginWithGoogle = loginWithGoogle;
 globalThis.loginWithUserPasswd = loginWithUserPasswd;
