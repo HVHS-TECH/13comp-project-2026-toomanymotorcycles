@@ -1,0 +1,167 @@
+@keyframes signup-button-anim {
+    from {background-position: 0%; transform: scale(1.0);}
+    to {background-position: 50%; transform: scale(1.05);}
+}
+@keyframes signup-button-anim-rev {
+    from {background-position: 50%; transform: scale(1.05);}
+    to {background-position: 0%; transform: scale(1.0);}
+}
+@keyframes signup-button-anim-clk {
+    from {transform: scale(1.05);}
+    to {transform: scale(1.0);}
+}
+@keyframes signup-button-anim-clk-rev {
+    from {transform: scale(1.0);}
+    to {transform: scale(1.05);}
+}
+@keyframes remember-me-toggle-checkmark-appear {
+    from {transform: scale(0); opacity:0;}
+    to {transform: scale(1) rotate(45deg); opacity:1;}
+}
+@keyframes remember-me-toggle-checkmark-disappear {
+    from {transform: scale(1) rotate(45deg); opacity:1;}
+    to {transform: scale(0) rotate(90deg); opacity:0;}
+}
+
+
+/**********************************************/
+h1 {
+    margin: 0px;
+    text-align: center;
+}
+input {
+    color: white;
+    background-color: transparent;
+    font-size: large;
+    font-family: "Darker Grotesque", sans-serif;
+    margin: 5px;
+    padding: 5px;
+    border: 0px;
+    border-bottom: 1px dashed white;
+    width: 80%;
+}
+input:focus {
+    outline: none;
+    border-bottom: 1px solid white;
+}
+button {
+    color: white;
+    font-family: "Darker Grotesque", sans-serif;
+    background-image: linear-gradient(45deg,rgb(80, 0, 126),rgb(0, 12, 124));
+    background-size: 200%;
+    transform: scale(1.0);
+    font-size: x-large;
+    padding: 10px;
+    margin: 0%;
+    width: 80%;
+    border-radius: 5px;
+    border: 0px;
+    animation: signup-button-anim-rev 0.1s ease-in-out;
+}
+button:hover {
+    background-position: 50%;
+    transform: scale(1.05);
+    animation: signup-button-anim 0.1s ease-in-out;
+}
+button:active {
+    color: rgb(78, 78, 78);
+    background-image: linear-gradient(45deg,rgb(43, 0, 68),rgb(0, 7, 71));
+    transform: scale(1.0);
+    animation: signup-button-anim-clk 0.05s ease-in-out;
+}
+.button-awaiting {
+    color: white;
+    background-image: linear-gradient(45deg,rgb(56, 56, 56),rgb(12, 12, 12));
+    transform: scale(1.0);
+    animation: none;
+}
+.button-awaiting:hover {
+    color: white;
+    background-image: linear-gradient(45deg,rgb(56, 56, 56),rgb(12, 12, 12));
+    transform: scale(1.0);
+    animation: none;
+}
+.button-awaiting:active {
+    color: white;
+    background-image: linear-gradient(45deg,rgb(56, 56, 56),rgb(12, 12, 12));
+    transform: scale(1.0);
+    animation: none;
+}
+.page {
+    display: flex;
+    height: 100vh;
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.login-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(10, 10, 10);
+    border-radius: 5px;
+    margin: 20px;
+    padding: 20px;
+    width: 50%;
+}
+.error {
+    color: indianred;
+}
+#login-form {
+    width: 70%;
+    justify-items: center;
+}
+
+#remember-me-toggle {
+    appearance: none;
+    opacity: 0;
+    height: 18px;
+    width: 18px;
+}
+
+#remember-me-toggle + span {
+    display:inline-block;
+    height: 18px;
+    width: 18px;
+    border: 3px solid rgb(71, 71, 71);
+    border-radius: 3px;
+}
+
+#remember-me-toggle:checked + span {
+    border: 0px;
+    height: 23px;
+    width: 23px;
+    background-image: linear-gradient(45deg,rgb(80, 0, 126),rgb(0, 12, 124));
+}
+
+#remember-me-toggle + span::after {
+    content: "";
+    display: block;
+    opacity: 0;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+    margin-left: 5px;
+    margin-top: 2px;
+    animation: remember-me-toggle-checkmark-disappear 0.25s ease-in-out;
+} 
+
+#remember-me-toggle:checked + span::after {
+    content: "";
+    display: block;
+    opacity: 1;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+    margin-left: 8px;
+    margin-top: 4px;
+    animation: remember-me-toggle-checkmark-appear 0.25s ease-in-out;
+}

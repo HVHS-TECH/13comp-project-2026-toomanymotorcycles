@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alef:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./../../stylesheets_global/style-main.css">
-    <link rel="stylesheet" href="style-login.css">
+    <link rel="stylesheet" href="style-signup.css">
     <noscript>
         <style>
             html, body {
@@ -21,7 +21,7 @@
             }
         </style>
     </noscript>
-    <script src="login_handler.mjs" type="module"></script>
+    <script src="signup_handler.mjs" type="module"></script>
 </head>
 <body>
     <noscript>
@@ -41,11 +41,15 @@
     </div>
     <div class="container" id="page" style="display:none">
         <div class="login-section">
-            <h1>Login</h1>
+            <h1>Sign Up</h1>
             <form id="login-form">
-                <input id="user-field" type="text" placeholder="Email">
+                <input id="user-field" type="text" placeholder="Username">
+                <br>
+                <input id="email-field" type="email" placeholder="Email">
                 <br>
                 <input id="passwd-field" type="password" placeholder="Password">
+                <br>
+                <input id="conf-passwd-field" type="password" placeholder="Confirm Password">
                 <br><br>
                 <label for="remember-me-toggle" style="display:flex;">
                     Remember me
@@ -55,9 +59,9 @@
             </form>
             <br>
             <p class="error" id="userpass-error" hidden>Authentication failed.</p>
-            <button id="login-button" onclick="loginWithUserPasswd(document.getElementById('user-field').value,document.getElementById('passwd-field').value)"><b>Login</b></button>
+            <button id="login-button" onclick="loginWithUserPasswd(document.getElementById('user-field').value,document.getElementById('passwd-field').value)"><b>Sign Up</b></button>
             <h2 style="text-align: center;">--- or ---</h2>
-            <button id="google-button" onclick="loginWithGoogle()"><b>Sign in with Google</b></button>
+            <button id="google-button" onclick="loginWithGoogle()"><b>Sign up with Google</b></button>
             <p class="error" id="google-error" hidden>Internal authentication error, try again later.</p>
         </div>
     </div>
