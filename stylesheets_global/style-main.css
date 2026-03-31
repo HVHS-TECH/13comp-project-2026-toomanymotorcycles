@@ -9,6 +9,18 @@
             margin: 0%;
             padding: 0%;
         }
+        a {
+            color: gray;
+            margin-top: 10px;
+        }
+        a:hover {
+            color: rgb(173, 170, 170);
+            margin-top: 10px;
+        }
+        a:active {
+            color: rgb(73, 73, 73);
+            margin-top: 10px;
+        }
         .centered {
             display: flex;
             justify-content: center;

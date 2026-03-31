@@ -32,19 +32,12 @@
             line-height: 0%;
         }
         .navbar {
-            display: flex;
-            flex-direction: column-reverse;
+            display: inline-block;
             background-color: rgb(20, 20, 20);
             box-shadow: 0px -20px 100px 20px black;
             position: fixed;
             width: 100%;
             z-index: 9999;
-        }
-        .navbar nav {
-            width: 100%;
-        }
-        .navbar ul {
-            width: 100%;
         }
         .overlay {
             background-color: rgb(20, 20, 20);
@@ -81,18 +74,6 @@
             text-align: center;
             margin: 0px;
             padding: 10%;
-        }
-        .accHandler > a {
-            color: gray;
-            margin-top: 10px;
-        }
-        .accHandler > a:hover {
-            color: rgb(173, 170, 170);
-            margin-top: 10px;
-        }
-        .accHandler > a:active {
-            color: rgb(73, 73, 73);
-            margin-top: 10px;
         }
         button {
             color: white;
