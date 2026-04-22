@@ -18,7 +18,6 @@ function init() {
     console.info("-------------------------------------\n--- CHAOS DATABASE SOLUTIONS V1.0 ---\n------ COPYRIGHT OF CHAOS INC. ------\n-------------------------------------");
     console.log("CDS: Initialising...");
     document.getElementById("loading").removeAttribute("hidden");
-    globalThis.user = undefined;
     app = initializeApp(firebaseConfig);
     analytics = getAnalytics(app);
     db = getFirestore(app);
@@ -31,6 +30,11 @@ function init() {
 }
 try {
     init();
+    onAuthStateChanged(getAuth(), (user) => {
+        if (user) {
+            window.location.href = "../../pages/hub/hub.html";
+        }
+    })
 } catch (err) {
     console.error(`-!- CDS FATAL ERROR -!-\nInitialisation FAILED\n${err}`);
     document.getElementById("loading-gif").setAttribute("src","./../../resources/resources_global/warning.png");
@@ -88,6 +92,7 @@ function loginWithUserPasswd(email,passwd) {
     toggleButtonState(document.getElementById("login-button"),false);
     signInWithEmailAndPassword(AUTH, email, passwd).then((userCredential) => {
         console.log(userCredential);
+        globalThis.user = userCredential
     }).catch((err) => {
         var errorMessage = document.getElementById("userpass-error");
         errorMessage.removeAttribute("hidden");
