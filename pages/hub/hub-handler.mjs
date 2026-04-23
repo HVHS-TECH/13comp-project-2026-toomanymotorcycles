@@ -22,17 +22,17 @@ function init() {
     app = initializeApp(firebaseConfig);
     analytics = getAnalytics(app);
     db = getFirestore(app);
+    onAuthStateChanged(getAuth(), (user) => {
+        if (!user) {
+            window.location.href = "../../pages/login/login.html";
+        }
+    })
     document.getElementById("loading").setAttribute("hidden",true);
     document.getElementById("page").removeAttribute("style");
     console.log("CDS: Initialisation complete.");
 }
 try {
     init();
-    onAuthStateChanged(getAuth(), (user) => {
-        if (!user) {
-            window.location.href = "../../pages/login/login.html";
-        }
-    })
 } catch (err) {
     console.error(`-!- CDS FATAL ERROR -!-\nInitialisation FAILED\n${err}`);
     document.getElementById("loading-gif").setAttribute("src","./../../resources/resources_global/warning.png");
