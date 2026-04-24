@@ -13,26 +13,41 @@ const firebaseConfig = {
   measurementId: "G-J1FZFCMSRE"
 };
 
-var app, analytics, userAuthService, authProvider, db, initialised = false;
-function init() {
+var app, analytics, userAuthService, authProvider, db, account, initialised = false;
+
+async function init() {
     console.info("-------------------------------------\n--- CHAOS DATABASE SOLUTIONS V1.0 ---\n------ COPYRIGHT OF CHAOS INC. ------\n-------------------------------------");
     console.log("CDS: Initialising...");
     document.getElementById("loading").removeAttribute("hidden");
-    globalThis.user = undefined;
     app = initializeApp(firebaseConfig);
     analytics = getAnalytics(app);
     db = getFirestore(app);
-    onAuthStateChanged(getAuth(), (user) => {
+    await onAuthStateChanged(getAuth(), (user) => {
         if (!user) {
             window.location.href = "../../pages/login/login.html";
+        }
+        else{
+            account = user;
+            console.log(account.uid)
         }
     })
     document.getElementById("loading").setAttribute("hidden",true);
     document.getElementById("page").removeAttribute("style");
     console.log("CDS: Initialisation complete.");
 }
+
+function requestUsername() {
+    get(doc(db, 'users', account.uid)).then((data) => {
+
+    })
+}
+
+function displayData() {}
+
 try {
     init();
+    requestUsername();
+    displayData();
 } catch (err) {
     console.error(`-!- CDS FATAL ERROR -!-\nInitialisation FAILED\n${err}`);
     document.getElementById("loading-gif").setAttribute("src","./../../resources/resources_global/warning.png");
