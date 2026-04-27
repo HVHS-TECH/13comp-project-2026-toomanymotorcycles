@@ -54,17 +54,10 @@
             </div>
         </div>
     </div>
-    <div class="container" id="setup-finish" style="display:none">
-        <h1>Welcome to Galaxy Games!</h1>
-        <p>Let's finish setting up your account.</p>
-        <form>
-            <input type="text">
-        </form>
-    </div>
     <div class="footer" id="footer-absolute">
             <p>Use of this service is at your own risk. Chaos Technologies Inc. is not responsible for any personal data lost in the event that we experience a data breach, any such complaints relating to this matter are void.<br>If our servers are damaged, destroyed, or otherwise disabled, you may lose some or all saved information, including, but not limited to, game records, high scores, personal information associated with your account, and some or all security data related to your account.<br>Upon signing up, you hereby give up your soul to us, and agree that we may use your soul for any purpose that we see fit, including, but not limited to, deals with Satan or any other dark deity, research on the nature of the human soul, or consumption by senior management.<br>For more information, visit our main site at <a href="https://www.example.com/">www.nonexistent.com</a></p>
             <img src="./../../resources/resources_global/banner2.png" width="200" height="100">
-            <div><p>© Chaos Technologies Inc. (2026)<br>Unauthorised replication of our software or unauthorised performance of any other copyright-protected acts is prohibited by law.<b>We have no relation whatsoever to the Chaos Insurgency, and we do not endorse their actions.</b></p><p style="font-size: large;">Major Disclaimer: This is a joke - Chaos Technologies Inc. does not actually exist.</p></div>
+            <div><p>© Chaos Technologies Inc. (2026)<br>Unauthorised replication of our software or unauthorised performance of any other copyright-protected acts is prohibited by law. <b>We have no relation whatsoever to the Chaos Insurgency, and we do not endorse their actions.</b></p><p style="font-size: large;">Major Disclaimer: This is a joke - Chaos Technologies Inc. does not actually exist.</p></div>
     </div>
 
     <!-- Dialog boxes (popups) which exist outside the main structure of the page-->
@@ -72,6 +65,17 @@
     <dialog id="signout-warn" closedby="any">
         <h2>Are you sure you want to sign out?</h2>
         <button onclick='document.getElementById("signout-warn").close()'><b>No</b></button> <button class="redwarn"><b>Yes</b></button>
+    </dialog>
+    <dialog id="setup-finish" closedby="none">
+        <h1>Welcome to Galaxy Games!</h1>
+        <p>Let's finish setting up your account.</p>
+        <form>
+            <label for="username"><b>Username</b></label><br><input type="text" name="username" placeholder="Max. 20 characters">
+            <br><br>
+            <label for="marketing">I would like to receive updates and marketing emails from Chaos Technologies</label><br><input type="checkbox" name="marketing" class="checkbox">
+            <p>(this is a joke, you won't get any emails either way)</p>
+        </form>
+        <button><b>Finish account setup</b></button>
     </dialog>
 </body>
 </html>

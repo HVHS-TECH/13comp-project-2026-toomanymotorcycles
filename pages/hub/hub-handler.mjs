@@ -33,6 +33,7 @@ async function init() {
     })
     document.getElementById("loading").setAttribute("hidden",true);
     document.getElementById("page").removeAttribute("style");
+    document.getElementById("setup-finish").showModal();
     console.log("CDS: Initialisation complete.");
 }
 
