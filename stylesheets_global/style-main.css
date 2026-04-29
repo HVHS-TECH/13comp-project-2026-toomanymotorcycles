@@ -1,5 +1,13 @@
-
-
+        
+        @keyframes remember-me-toggle-checkmark-appear {
+            from {transform: scale(0); opacity:0;}
+            to {transform: scale(1) rotate(45deg); opacity:1;}
+        }
+        @keyframes remember-me-toggle-checkmark-disappear {
+            from {transform: scale(1) rotate(45deg); opacity:1;}
+            to {transform: scale(0) rotate(90deg); opacity:0;}
+        }
+        
         /**********************************************/
 
         body, html{
@@ -21,14 +29,94 @@
             color: rgb(73, 73, 73);
             margin-top: 10px;
         }
+        input {
+            color: white;
+            background-color: transparent;
+            font-size: large;
+            font-family: "Darker Grotesque", sans-serif;
+            margin: 5px;
+            padding: 5px;
+            border: 0px;
+            border-bottom: 1px dashed rgb(255, 255, 255);
+            background-color: rgb(5, 5, 5);
+            border-radius: 2px;
+            box-shadow: 5px 5px 10px rgb(0, 0, 0) inset;
+            width: 80%;
+        }
+        input:focus {
+            outline: none;
+            border-bottom: 1px solid white;
+        }
+        input:autofill {
+             
+        }
+        .errorInput {
+            color: indianred;
+            border: 2px solid indianred;
+        }
+        .errorInput:focus {
+            color: indianred;
+            border: 2px solid indianred;
+        }
         .centered {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 500px;
         }
+        .error {
+            color: indianred;
+        }
+        .fine-print{
+            font-size: x-small;
+        }
         #loading {
             text-align: center;
+        }
+        .checkbox {
+            appearance: none;
+            opacity: 0;
+            height: 18px;
+            width: 18px;
+        }
+        .checkbox span {
+            display:inline-block;
+            height: 18px;
+            width: 18px;
+            border: 3px solid rgb(71, 71, 71);
+            border-radius: 3px;
+        }
+        .checkbox:checked span {
+            border: 0px;
+            height: 23px;
+            width: 23px;
+            background-image: linear-gradient(45deg,rgb(80, 0, 126),rgb(0, 12, 124));
+        }
+        .checkbox span::after {
+            content: "";
+            display: block;
+            opacity: 0;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+            margin-left: 5px;
+            margin-top: 2px;
+            animation: remember-me-toggle-checkmark-disappear 0.25s ease-in-out;
+        } 
+        .checkbox:checked span::after {
+            content: "";
+            display: block;
+            opacity: 1;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+            margin-left: 8px;
+            margin-top: 4px;
+            animation: remember-me-toggle-checkmark-appear 0.25s ease-in-out;
         }
         .footer {
             position: relative;

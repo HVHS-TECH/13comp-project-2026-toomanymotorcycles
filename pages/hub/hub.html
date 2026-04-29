@@ -68,12 +68,13 @@
     </dialog>
     <dialog id="setup-finish" closedby="none">
         <h1>Welcome to Galaxy Games!</h1>
-        <p>Let's finish setting up your account.</p>
+        <h3>Let's finish setting up your account.</h3>
         <form>
-            <label for="username"><b>Username</b></label><br><input type="text" name="username" placeholder="Max. 20 characters">
+            <label for="username"><b>Username</b></label><br><input class="errorInput" type="text" name="username" placeholder="Max. 20 characters">
+            <p class="error">This is a required field.</p>
             <br><br>
-            <label for="marketing">I would like to receive updates and marketing emails from Chaos Technologies</label><br><input type="checkbox" name="marketing" class="checkbox">
-            <p>(this is a joke, you won't get any emails either way)</p>
+            <label for="marketing">I would like to receive emails from Chaos Technologies</label><br><input type="checkbox" name="marketing" class="checkbox">
+            <p class="fine-print">(this is a joke, you won't get any emails either way)</p>
         </form>
         <button><b>Finish account setup</b></button>
     </dialog>

@@ -1,21 +1,4 @@
 
-@keyframes signout-warn-bd-anim {
-    from {backdrop-filter: blur(0px);}
-    to {backdrop-filter: blur(2px);}
-}
-@keyframes signout-warn-bd-anim-rev {
-    from {backdrop-filter: blur(2px);}
-    to {backdrop-filter: blur(0px);}
-}
-@keyframes remember-me-toggle-checkmark-appear {
-    from {transform: scale(0); opacity:0;}
-    to {transform: scale(1) rotate(45deg); opacity:1;}
-}
-@keyframes remember-me-toggle-checkmark-disappear {
-    from {transform: scale(1) rotate(45deg); opacity:1;}
-    to {transform: scale(0) rotate(90deg); opacity:0;}
-}
-
 /**********************************************/
 
 #signout-warn {
@@ -48,6 +31,13 @@
 #setup-finish::backdrop {
     background-image: linear-gradient(rgb(80, 0, 126),rgb(0, 12, 124));
 }
+#setup-finish h1 {
+    line-height: 0%;
+}
+
+#setup-finish input {
+    line-height: 0%;
+}
 
 .sidebar {
     background-color: rgb(10, 10, 10);
@@ -55,6 +45,10 @@
 
 .sidebar ul {
     list-style: none;
+}
+
+.error {
+    line-height: 0%;
 }
 
 .redwarn {
@@ -68,69 +62,6 @@
     padding: 10px;
     margin: 5px;
 }
-
-.checkbox {
-    appearance: none;
-    opacity: 0;
-    height: 18px;
-    width: 18px;
-}
-
-.checkbox span {
-    display:inline-block;
-    height: 18px;
-    width: 18px;
-    border: 3px solid rgb(71, 71, 71);
-    border-radius: 3px;
-}
-
-.checkbox:checked span {
-    border: 0px;
-    height: 23px;
-    width: 23px;
-    background-image: linear-gradient(45deg,rgb(80, 0, 126),rgb(0, 12, 124));
-}
-
-.checkbox span::after {
-    content: "";
-    display: block;
-    opacity: 0;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    transform: rotate(45deg);
-    margin-left: 5px;
-    margin-top: 2px;
-    animation: remember-me-toggle-checkmark-disappear 0.25s ease-in-out;
-} 
-
-.checkbox:checked span::after {
-    content: "";
-    display: block;
-    opacity: 1;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    transform: rotate(45deg);
-    margin-left: 8px;
-    margin-top: 4px;
-    animation: remember-me-toggle-checkmark-appear 0.25s ease-in-out;
-}
-
-input {
-    color: white;
-    background-color: transparent;
-    font-size: large;
-    font-family: "Darker Grotesque", sans-serif;
-    margin: 5px;
-    padding: 5px;
-    border: 0px;
-    border-bottom: 1px dashed white;
-    width: 80%;
-}
-
 button {
     color: white;
     background-image: linear-gradient(45deg,rgb(0, 0, 0),rgb(12, 12, 12));
