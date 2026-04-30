@@ -95,19 +95,25 @@ function loginWithUserPasswd(email,passwd) {
         globalThis.user = userCredential
     }).catch((err) => {
         var errorMessage = document.getElementById("userpass-error");
+        var userfield = document.getElementById("user-field");
+        var passfield = document.getElementById("passwd-field");
+        userfield.className = "";
+        passfield.className = "";
         errorMessage.removeAttribute("hidden");
         switch(err.code) {
-            case "auth/missing-email":
+            case "auth/missing-email", "auth/missing-password":
                errorMessage.innerText = "Please enter your email and password.";
+                userfield.className = "errorInput";
+                passfield.className = "errorInput";
                break;
             case "auth/invalid-email":
                errorMessage.innerText = "Invalid email.";
-               break;
-            case "auth/missing-password":
-               errorMessage.innerText = "Please enter your email and password.";
+               userfield.className = "errorInput";
                break;
             case "auth/invalid-credential":
                errorMessage.innerText = "Incorrect username or password.";
+               userfield.className = "errorInput";
+                passfield.className = "errorInput";
                break;
             default:
                errorMessage.innerText = "Internal authentication error, try again later.";

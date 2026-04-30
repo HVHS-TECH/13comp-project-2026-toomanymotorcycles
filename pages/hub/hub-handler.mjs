@@ -15,40 +15,47 @@ const firebaseConfig = {
 
 var app, analytics, userAuthService, authProvider, db, account, initialised = false;
 
-async function init() {
+function init() {
     console.info("-------------------------------------\n--- CHAOS DATABASE SOLUTIONS V1.0 ---\n------ COPYRIGHT OF CHAOS INC. ------\n-------------------------------------");
     console.log("CDS: Initialising...");
-    document.getElementById("loading").removeAttribute("hidden");
     app = initializeApp(firebaseConfig);
     analytics = getAnalytics(app);
     db = getFirestore(app);
-    await onAuthStateChanged(getAuth(), (user) => {
+    onAuthStateChanged(getAuth(), (user) => {
         if (!user) {
             window.location.href = "../../pages/login/login.html";
         }
         else{
             account = user;
             console.log(account.uid)
+            requestUsername();
+            displayData();
+            document.getElementById("loading").setAttribute("hidden",true);
+            document.getElementById("page").removeAttribute("style");
+            console.log("CDS: Initialisation complete.");
         }
     })
-    document.getElementById("loading").setAttribute("hidden",true);
-    document.getElementById("page").removeAttribute("style");
-    document.getElementById("setup-finish").showModal();
-    console.log("CDS: Initialisation complete.");
 }
 
 function requestUsername() {
-    get(doc(db, 'users', account.uid)).then((data) => {
-
+    console.log(getAuth().currentUser)
+    get(doc(db, 'users', getAuth().currentUser.uid)).then((data) => {
+        if (data.exists()) {
+            globalThis.username = data;
+        } else {
+            document.getElementById("setup-finish").showModal();
+        }
     })
+}
+
+function setUsername() {
+
 }
 
 function displayData() {}
 
 try {
     init();
-    requestUsername();
-    displayData();
 } catch (err) {
     console.error(`-!- CDS FATAL ERROR -!-\nInitialisation FAILED\n${err}`);
     document.getElementById("loading-gif").setAttribute("src","./../../resources/resources_global/warning.png");
