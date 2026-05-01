@@ -28,22 +28,23 @@ function init() {
         else{
             account = user;
             console.log(account.uid)
-            requestUsername();
-            displayData();
-            document.getElementById("loading").setAttribute("hidden",true);
-            document.getElementById("page").removeAttribute("style");
-            console.log("CDS: Initialisation complete.");
+            requestUsername().then(() => {
+                displayData();
+                document.getElementById("loading").setAttribute("hidden",true);
+                document.getElementById("page").removeAttribute("style");
+                console.log("CDS: Initialisation complete.");
+            });
         }
     })
 }
 
-function requestUsername() {
+async function requestUsername() {
     console.log(getAuth().currentUser)
     get(doc(db, 'users', getAuth().currentUser.uid)).then((data) => {
         if (data.exists()) {
-            globalThis.username = data;
+            Promise.resolve();
         } else {
-            document.getElementById("setup-finish").showModal();
+            Promise.reject();
         }
     })
 }
