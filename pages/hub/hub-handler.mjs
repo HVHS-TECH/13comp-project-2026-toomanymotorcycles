@@ -13,7 +13,7 @@ const firebaseConfig = {
   measurementId: "G-J1FZFCMSRE"
 };
 
-var app, analytics, userAuthService, authProvider, db, account, initialised = false;
+var app, analytics, userAuthService, authProvider, db, account, username, initialised = false;
 
 function init() {
     console.info("-------------------------------------\n--- CHAOS DATABASE SOLUTIONS V1.0 ---\n------ COPYRIGHT OF CHAOS INC. ------\n-------------------------------------");
@@ -28,26 +28,27 @@ function init() {
         else{
             account = user;
             console.log(account.uid)
-            requestUsername().then(() => {
+            requestUsername.then(() => {
                 displayData();
                 document.getElementById("loading").setAttribute("hidden",true);
                 document.getElementById("page").removeAttribute("style");
                 console.log("CDS: Initialisation complete.");
-            });
+            }, () => {document.getElementById("setup-finish").showModal();});
         }
     })
 }
 
-async function requestUsername() {
+const requestUsername = new Promise(function(resolve, reject) {
     console.log(getAuth().currentUser)
-    get(doc(db, 'users', getAuth().currentUser.uid)).then((data) => {
-        if (data.exists()) {
+    get(doc(db, 'users', getAuth().currentUser.uid)).then((snap) => {
+        if (snap.exists()) {
+            username = snap.data();
             Promise.resolve();
         } else {
             Promise.reject();
         }
     })
-}
+});
 
 function setUsername() {
 
