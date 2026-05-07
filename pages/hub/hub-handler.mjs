@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
-import { getFirestore, collection as col, doc, addDoc, deleteDoc, getDoc as get, getDocs as getm, query, orderBy, limit, onSnapshot as onSnap, Timestamp, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+import { getFirestore, collection as col, doc, addDoc, deleteDoc, getDoc as get, setDoc as set, getDocs as getm, query, orderBy, limit, onSnapshot as onSnap, Timestamp, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, signOut} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -50,8 +50,39 @@ const requestUsername = new Promise(function(resolve, reject) {
     })
 });
 
-function setUsername() {
+function setupUser(username,canReceiveAds) {
+    switch (username.length) {
+        case username.length == 0:
+                document.getElementById("setup-finish-error").innerText = "This is a required field"
+                document.getElementById("setup-finish-error").removeAttribute("hidden");
+            break;
+        case username.length <= 20:
+            setDoc(doc(db, 'users', getAuth().currentUser.uid), {
+                username: username,
+                joinedAt: Date.now(),
+                canReceiveAds: canReceiveAds
+            }).then(() => {
+                displayData();
+                document.getElementById("loading").setAttribute("hidden",true);
+                document.getElementById("page").removeAttribute("style");
+                console.log("CDS: Initialisation complete.");
+            });
+            break;
+        case username.length > 20:
+                document.getElementById("setup-finish-username").className = "errorInput";
+                document.getElementById("setup-finish-error").innerText = "Username is over 20 characters"
+                document.getElementById("setup-finish-error").removeAttribute("hidden");
+            break;
+        default:
+                console.error("CDS FATAL ERROR: Something has gone very, VERY wrong. \n username.length returned a negative value");
+            break;
+    }
+    if (username.length <= 20) {
+        
+    } else {
 
+    }
+    
 }
 
 function displayData() {}
@@ -67,3 +98,5 @@ try {
     document.getElementById("loading-message").setAttribute("style","color:indianred");
     document.getElementById("fatalerror-info").removeAttribute("hidden");
 };
+
+globalThis.setupUser = setupUser;

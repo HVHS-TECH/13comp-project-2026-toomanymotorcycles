@@ -70,13 +70,13 @@
         <h1>Welcome to Galaxy Games!</h1>
         <h3>Let's finish setting up your account.</h3>
         <form>
-            <label for="username"><b>Username</b></label><br><input type="text" name="username" placeholder="Max. 20 characters">
-            <p class="error">This is a required field.</p>
+            <label for="username"><b>Username</b></label><br><input type="text" name="username" id="setup-finish-username" placeholder="Max. 20 characters">
+            <p class="error" id="setup-finish-error" hidden>This is a required field.</p>
             <br><br>
-            <label for="marketing">I would like to receive emails from Chaos Technologies</label><br><input type="checkbox" name="marketing" class="checkbox">
+            <label for="marketing">I would like to receive emails from Chaos Technologies</label><br><input type="checkbox" name="marketing" id="setup-finish-marketing" class="checkbox">
             <p class="fine-print">(this is a joke, you won't get any emails either way)</p>
         </form>
-        <button><b>Finish account setup</b></button>
+        <button onclick="setupUser(document.getElementById('setup-finish-username').value,document.getElementById('setup-finish-marketing').value)"><b>Finish account setup</b></button>
     </dialog>
 </body>
 </html>
