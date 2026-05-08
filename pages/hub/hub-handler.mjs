@@ -27,48 +27,48 @@ function init() {
         }
         else{
             account = user;
-            console.log(account.uid)
-            requestUsername.then(() => {
-                displayData();
-                document.getElementById("loading").setAttribute("hidden",true);
-                document.getElementById("page").removeAttribute("style");
-                console.log("CDS: Initialisation complete.");
-            }, () => {document.getElementById("setup-finish").showModal();});
+            get(doc(db, 'users', getAuth().currentUser.uid)).then((snap) => {
+                if (snap.exists()) {
+                    username = snap.data();
+                    displayData();
+                    document.getElementById("loading").setAttribute("hidden",true);
+                    document.getElementById("page").removeAttribute("style");
+                    console.log("CDS: Initialisation complete.");
+                } else {
+                    document.getElementById("setup-finish").showModal();
+                }
+            })
         }
     })
 }
 
-const requestUsername = new Promise(function(resolve, reject) {
-    console.log(getAuth().currentUser)
-    get(doc(db, 'users', getAuth().currentUser.uid)).then((snap) => {
-        if (snap.exists()) {
-            username = snap.data();
-            Promise.resolve();
-        } else {
-            Promise.reject();
-        }
-    })
-});
-
-function setupUser(username,canReceiveAds) {
-    switch (username.length) {
-        case username.length == 0:
+function setupUser(userName,canReceiveAds) {
+    if (canReceiveAds == "on") {
+        canReceiveAds = true;
+    } else {
+        canReceiveAds = false;
+    }
+    switch (true) {
+        case userName.length == 0:
+                document.getElementById("setup-finish-username").className = "errorInput";
                 document.getElementById("setup-finish-error").innerText = "This is a required field"
                 document.getElementById("setup-finish-error").removeAttribute("hidden");
             break;
-        case username.length <= 20:
-            setDoc(doc(db, 'users', getAuth().currentUser.uid), {
-                username: username,
+        case userName.length <= 20:
+            set(doc(db, 'users', getAuth().currentUser.uid), {
+                username: userName,
                 joinedAt: Date.now(),
                 canReceiveAds: canReceiveAds
             }).then(() => {
+                username = userName;
                 displayData();
                 document.getElementById("loading").setAttribute("hidden",true);
                 document.getElementById("page").removeAttribute("style");
                 console.log("CDS: Initialisation complete.");
+                document.getElementById("setup-finish").close();
             });
             break;
-        case username.length > 20:
+        case userName.length > 20:
                 document.getElementById("setup-finish-username").className = "errorInput";
                 document.getElementById("setup-finish-error").innerText = "Username is over 20 characters"
                 document.getElementById("setup-finish-error").removeAttribute("hidden");
@@ -77,15 +77,11 @@ function setupUser(username,canReceiveAds) {
                 console.error("CDS FATAL ERROR: Something has gone very, VERY wrong. \n username.length returned a negative value");
             break;
     }
-    if (username.length <= 20) {
-        
-    } else {
-
-    }
-    
 }
 
-function displayData() {}
+function displayData() {
+    document.getElementById("username-display").innerText = username;
+}
 
 try {
     init();

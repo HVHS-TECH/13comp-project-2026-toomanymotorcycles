@@ -41,7 +41,7 @@
     </div>
     <div class="container" id="page" style="display:none">
         <div class="sidebar">
-            <h2>{USERNAME}</h2>
+            <h2 id="username-display">{USERNAME}</h2>
             <img height="100" width="100" src="./../../resources/resources_global/placeholder.png">
             <ul>
                 <li><a>Home</a></li>
@@ -73,7 +73,7 @@
             <label for="username"><b>Username</b></label><br><input type="text" name="username" id="setup-finish-username" placeholder="Max. 20 characters">
             <p class="error" id="setup-finish-error" hidden>This is a required field.</p>
             <br><br>
-            <label for="marketing">I would like to receive emails from Chaos Technologies</label><br><input type="checkbox" name="marketing" id="setup-finish-marketing" class="checkbox">
+            <label for="marketing">I would like to receive advertisements and emails from Chaos Technologies</label><br><input type="checkbox" name="marketing" id="setup-finish-marketing" class="checkbox">
             <p class="fine-print">(this is a joke, you won't get any emails either way)</p>
         </form>
         <button onclick="setupUser(document.getElementById('setup-finish-username').value,document.getElementById('setup-finish-marketing').value)"><b>Finish account setup</b></button>
