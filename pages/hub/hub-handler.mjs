@@ -13,7 +13,7 @@ const firebaseConfig = {
   measurementId: "G-J1FZFCMSRE"
 };
 
-var app, analytics, userAuthService, authProvider, db, account, username, initialised = false;
+var app, analytics, authProvider, db, account, username, globalCanReceiveAds = false;
 
 function init() {
     console.info("-------------------------------------\n--- CHAOS DATABASE SOLUTIONS V1.0 ---\n------ COPYRIGHT OF CHAOS INC. ------\n-------------------------------------");
@@ -27,9 +27,11 @@ function init() {
         }
         else{
             account = user;
+            console.log(account);
             get(doc(db, 'users', getAuth().currentUser.uid)).then((snap) => {
                 if (snap.exists()) {
-                    username = snap.data();
+                    username = snap.data().username;
+                    globalCanReceiveAds = snap.data().canReceiveAds;
                     displayData();
                     document.getElementById("loading").setAttribute("hidden",true);
                     document.getElementById("page").removeAttribute("style");
@@ -81,6 +83,7 @@ function setupUser(userName,canReceiveAds) {
 
 function displayData() {
     document.getElementById("username-display").innerText = username;
+    document.getElementById("pic-display").src = account.photoURL;
 }
 
 try {

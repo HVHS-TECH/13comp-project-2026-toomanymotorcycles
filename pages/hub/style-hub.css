@@ -39,12 +39,23 @@
     line-height: 0%;
 }
 
+#pic-display {
+    display: block;
+    margin: auto;
+}
+
 .sidebar {
     background-color: rgb(10, 10, 10);
+    position: sticky;
+    top: 0%;
+    padding: 3%;
+    width: 15%;
+    text-align: center;
 }
 
 .sidebar ul {
     list-style: none;
+    text-align: left;
 }
 
 .error {

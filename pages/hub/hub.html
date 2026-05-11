@@ -42,15 +42,15 @@
     <div class="container" id="page" style="display:none">
         <div class="sidebar">
             <h2 id="username-display">{USERNAME}</h2>
-            <img height="100" width="100" src="./../../resources/resources_global/placeholder.png">
+            <img id="pic-display" height="100" width="100" src="./../../resources/resources_global/placeholder.png">
             <ul>
-                <li><a>Home</a></li>
+                <li><a class="activeLink">Home</a></li>
                 <li><a>Games</a></li>
                 <li><a>News</a></li>
                 <li><a>Leaderboards</a></li>
             </ul>
             <div>
-                <a>settings</a> <a onclick='document.getElementById("signout-warn").showModal()'>signout</a>
+                <a><img src="./../../resources/resources_global/settings.png" width="10" height="10"></a> <a onclick='document.getElementById("signout-warn").showModal()'><img src="./../../resources/resources_global/logout.png" width="10" height="10"></a>
             </div>
         </div>
     </div>
