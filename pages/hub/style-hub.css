@@ -43,6 +43,9 @@
     display: block;
     margin: auto;
 }
+.container {
+    display: flex;
+}
 
 .sidebar {
     background-color: rgb(10, 10, 10);
@@ -56,6 +59,10 @@
 .sidebar ul {
     list-style: none;
     text-align: left;
+}
+
+.section {
+   margin: 2%; 
 }
 
 .error {
