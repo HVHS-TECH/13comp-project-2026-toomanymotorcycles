@@ -69,9 +69,17 @@
             <h1>Settings</h1>
             <hr>
             <h2>Account Info</h2>
-            <p id="settings-dispname">Display Name: {DISPLAY NAME}</p>
-            <p id="settings-username">Username: {USERNAME}</p>
-            <p>Password: ********</p>
+            <div class="authlock">
+                <div class="authlock-block">
+                    <h2>LOCKED</h2>
+                    <p>For your safety, you must re-authenticate in order to access these settings.</p>
+                </div>
+                <div class="authlock-content" hidden>
+                    <p id="settings-dispname">Display Name: {DISPLAY NAME}</p><a><img src="./../../resources/resources_global/edit.png" width="10" height="10"></a>
+                    <p id="settings-username">Username: {USERNAME}</p><a><img src="./../../resources/resources_global/edit.png" width="10" height="10"></a>
+                    <p>Password: ********</p><a><img src="./../../resources/resources_global/edit.png" width="10" height="10"></a>
+                </div>
+            </div>
             <hr>
             <h2>DANGER ZONE</h2>
             <button class="redwarn">ERASE DATA</button><button class="redwarn">DELETE ACCOUNT</button>
