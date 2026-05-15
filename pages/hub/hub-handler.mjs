@@ -60,7 +60,7 @@ function setupUser(userName,canReceiveAds) {
             set(doc(db, 'users', getAuth().currentUser.uid), {
                 username: userName,
                 joinedAt: Date.now(),
-                canReceiveAds: canReceiveAds
+                canReceiveAds
             }).then(() => {
                 username = userName;
                 displayData();

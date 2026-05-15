@@ -71,8 +71,10 @@
             <h2>Account Info</h2>
             <div class="authlock">
                 <div class="authlock-block">
+                    <img src="./../../resources/resources_global/padlock.png" width="60" height="60">
                     <h2>LOCKED</h2>
                     <p>For your safety, you must re-authenticate in order to access these settings.</p>
+                    <button>Reauthenticate</button>
                 </div>
                 <div class="authlock-content" hidden>
                     <p id="settings-dispname">Display Name: {DISPLAY NAME}</p><a><img src="./../../resources/resources_global/edit.png" width="10" height="10"></a>
@@ -82,7 +84,17 @@
             </div>
             <hr>
             <h2>DANGER ZONE</h2>
-            <button class="redwarn">ERASE DATA</button><button class="redwarn">DELETE ACCOUNT</button>
+            <div class="authlock">
+                <div class="authlock-block">
+                    <img src="./../../resources/resources_global/padlock.png" width="60" height="60">
+                    <h2>LOCKED</h2>
+                    <p>For your safety, you must re-authenticate in order to access these settings.</p>
+                    <button>Reauthenticate</button>
+                </div>
+                <div class="authlock-content" hidden>
+                    <button class="redwarn">ERASE DATA</button><button class="redwarn">DELETE ACCOUNT</button>
+                </div>
+            </div>
         </div>
     </div>
     <div class="footer">
