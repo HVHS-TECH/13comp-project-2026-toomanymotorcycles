@@ -99,3 +99,4 @@ try {
 };
 
 globalThis.setupUser = setupUser;
+document.getElementById("account-delete-warn").showModal();

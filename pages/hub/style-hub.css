@@ -39,9 +39,26 @@
     line-height: 0%;
 }
 
+#data-erase-warn {
+    color: white;
+    background-color: rgb(23, 23, 23);
+    border: none;
+    border-radius: 5px;
+}
+
+#data-erase-warn h1{
+    color: indianred;
+    line-height: 0%;
+}
+
+#data-erase-warn:open::backdrop {
+    backdrop-filter: blur(2px);
+}
+
 #pic-display {
     display: block;
     margin: auto;
+    border-radius: 50%;
 }
 .container {
     display: flex;

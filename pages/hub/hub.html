@@ -68,7 +68,14 @@
         <div class="section" id="settings-section">
             <h1>Settings</h1>
             <hr>
-            <h2>Account Info</h2>
+            <h2>Theme</h2>
+            <hr>
+            <h2>Privacy</h2>
+            <p id="settings-saveinfo">Post high scores to leaderboard</p>
+            <p id="settings-saveanon">Post high scores anonymously</p>
+            <p id="settings-receiveads">Allow advertising from Chaos Technologies</p>
+            <hr>
+            <h2>Info & Security</h2>
             <div class="authlock">
                 <div class="authlock-block">
                     <img src="./../../resources/resources_global/padlock.png" width="60" height="60">
@@ -76,10 +83,15 @@
                     <p>For your safety, you must re-authenticate in order to access these settings.</p>
                     <button class="em-button"><b>Reauthenticate</b></button>
                 </div>
-                <div class="authlock-content" hidden>
-                    <p id="settings-dispname">Display Name: {DISPLAY NAME}</p><a><img src="./../../resources/resources_global/edit.png" width="10" height="10"></a>
-                    <p id="settings-username">Username: {USERNAME}</p><a><img src="./../../resources/resources_global/edit.png" width="10" height="10"></a>
-                    <p>Password: ********</p><a><img src="./../../resources/resources_global/edit.png" width="10" height="10"></a>
+                <div class="authlock-content" >
+                    <form id="settings-section-security">
+                        <label for="settings-dispname"><b>Display Name</b></label><br>
+                        <input id="settings-dispname" name="settings-dispname" type="text"><br><br>
+                        <label for="settings-username"><b>Username</b></label><br>
+                        <p style="line-height: 0%;">Changing your username may have unintended side effects.</p>
+                        <input id="settings-username" name="settings-username" type="text"><br><br>
+                    </form>
+                    <button>Confirm</button>
                 </div>
             </div>
             <hr>
@@ -120,6 +132,30 @@
             <p class="fine-print">(this is a joke, you won't get any emails either way)</p>
         </form>
         <button onclick="setupUser(document.getElementById('setup-finish-username').value,document.getElementById('setup-finish-marketing').value)"><b>Finish account setup</b></button>
+    </dialog>
+    <dialog id="data-erase-warn" closedby="any">
+        <h1>WARNING</h1>
+        <h3>You are about to erase all data related to your account.</h3>
+        <p>Once you do this, <i>there is no going back.</i> Please be certain of your decision before moving forward.<br>If you are sure that you would like to erase all data, please type your username below to confirm.</p>
+        <form>
+            <input class="wide-input" id="data-erase-conftest" type="text">
+        </form>
+        <button>Cancel</button><button class="redwarn"><b>Erase data</b></button>
+    </dialog>
+    <dialog id="account-delete-warn" closedby="any">
+        <h1>WARNING</h1>
+        <h3>You are about to delete your account.</h3>
+        <p>Once you do this, <i>there really is no going back.</i> Please be certain of your decision before moving forward.<br>If you are sure that you would like to completely delet your account, please type your username below to confirm.</p>
+        <form>
+            <input class="wide-input" id="data-erase-conftest" type="text">
+        </form>
+        <button>Cancel</button><button class="redwarn"><b>Delete account</b></button>
+    </dialog>
+    <dialog id="account-delete-finalwarn" closedby="any">
+        <h1>FINAL WARNING</h1>
+        <h3>Account deletion imminent.</h3>
+        <p>Account deletion is <b>FINAL.</b> Once complete, your account will be <b>UNRECOVERABLE.</b><br><i><b>Are you really sure that you want to do this?</b></i></p>
+        <button>Cancel</button><button class="redwarn"><b>Delete account</b></button>
     </dialog>
 </body>
 </html>
