@@ -1,33 +1,6 @@
 
 /**********************************************/
 
-#signout-warn {
-    color: white;
-    background-color: rgb(10, 10, 10);
-    border: none;
-    border-radius: 5px;
-    text-align: right;
-}
-
-#signout-warn::backdrop {
-    background-color: rgba(0, 0, 0, 0.616);
-    backdrop-filter: blur(0px);
-    animation: signout-warn-bd-anim-rev 0.5;
-}
-
-#signout-warn:open::backdrop {
-    background-color: rgba(0, 0, 0, 0.616);
-    backdrop-filter: blur(2px);
-    animation: signout-warn-bd-anim 0.5;
-}
-
-#setup-finish {
-    color: white;
-    background-color: rgb(10, 10, 10);
-    border: none;
-    border-radius: 5px;
-}
-
 #setup-finish::backdrop {
     background-image: linear-gradient(rgb(80, 0, 126),rgb(0, 12, 124));
 }
@@ -37,22 +10,6 @@
 
 #setup-finish input {
     line-height: 0%;
-}
-
-#data-erase-warn {
-    color: white;
-    background-color: rgb(23, 23, 23);
-    border: none;
-    border-radius: 5px;
-}
-
-#data-erase-warn h1{
-    color: indianred;
-    line-height: 0%;
-}
-
-#data-erase-warn:open::backdrop {
-    backdrop-filter: blur(2px);
 }
 
 #pic-display {
@@ -88,6 +45,11 @@
 }
 .authlock-block button {
     grid-area: button;
+}
+
+.warning-header {
+    color: indianred;
+    line-height: 0%;
 }
 
 .sidebar {

@@ -86,6 +86,21 @@ function displayData() {
     document.getElementById("pic-display").src = account.photoURL;
 }
 
+function eraseData() {
+
+}
+
+function deleteAccountPhase1() {
+    if (document.getElementById("account-delete-conftest").value == username) {
+        document.getElementById("account-delete-warn").close();
+        document.getElementById("account-delete-finalwarn").showModal();
+    }
+}
+
+function deleteAccountPhase2() {
+    
+}
+
 try {
     init();
 } catch (err) {
@@ -99,4 +114,4 @@ try {
 };
 
 globalThis.setupUser = setupUser;
-document.getElementById("account-delete-warn").showModal();
+globalThis.deleteAccountPhase1 = deleteAccountPhase1;

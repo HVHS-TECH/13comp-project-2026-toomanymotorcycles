@@ -103,8 +103,8 @@
                     <p>For your safety, you must re-authenticate in order to access these settings.</p>
                     <button class="em-button"><b>Reauthenticate</b></button>
                 </div>
-                <div class="authlock-content" hidden>
-                    <button class="redwarn">ERASE DATA</button><button class="redwarn">DELETE ACCOUNT</button>
+                <div class="authlock-content">
+                    <button class="redwarn" onclick="document.getElementById('data-erase-warn').showModal();">ERASE DATA</button><button class="redwarn" onclick="document.getElementById('account-delete-warn').showModal();">REQUEST ACCOUNT DELETION</button>
                 </div>
             </div>
         </div>
@@ -134,7 +134,7 @@
         <button onclick="setupUser(document.getElementById('setup-finish-username').value,document.getElementById('setup-finish-marketing').value)"><b>Finish account setup</b></button>
     </dialog>
     <dialog id="data-erase-warn" closedby="any">
-        <h1>WARNING</h1>
+        <h1 class="warning-header">WARNING</h1>
         <h3>You are about to erase all data related to your account.</h3>
         <p>Once you do this, <i>there is no going back.</i> Please be certain of your decision before moving forward.<br>If you are sure that you would like to erase all data, please type your username below to confirm.</p>
         <form>
@@ -143,19 +143,19 @@
         <button>Cancel</button><button class="redwarn"><b>Erase data</b></button>
     </dialog>
     <dialog id="account-delete-warn" closedby="any">
-        <h1>WARNING</h1>
-        <h3>You are about to delete your account.</h3>
-        <p>Once you do this, <i>there really is no going back.</i> Please be certain of your decision before moving forward.<br>If you are sure that you would like to completely delet your account, please type your username below to confirm.</p>
+        <h1 class="warning-header">WARNING</h1>
+        <h3>You are about to request account deletion.</h3>
+        <p>Once you do this, <i>there really is no going back.</i> Please be certain of your decision before moving forward.<br>If you are sure that you would like to completely delete your account, please type your username below to confirm.</p>
         <form>
-            <input class="wide-input" id="data-erase-conftest" type="text">
+            <input class="wide-input" id="account-delete-conftest" type="text" value="">
         </form>
-        <button>Cancel</button><button class="redwarn"><b>Delete account</b></button>
+        <button>Cancel</button><button class="redwarn" onclick="deleteAccountPhase1()"><b>Delete account</b></button>
     </dialog>
     <dialog id="account-delete-finalwarn" closedby="any">
-        <h1>FINAL WARNING</h1>
+        <h1 class="warning-header">FINAL WARNING</h1>
         <h3>Account deletion imminent.</h3>
         <p>Account deletion is <b>FINAL.</b> Once complete, your account will be <b>UNRECOVERABLE.</b><br><i><b>Are you really sure that you want to do this?</b></i></p>
-        <button>Cancel</button><button class="redwarn"><b>Delete account</b></button>
+        <button>Cancel</button><button class="redwarn"><b>Confirm deletion</b></button>
     </dialog>
 </body>
 </html>
