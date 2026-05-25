@@ -44,25 +44,25 @@
             <h2 id="username-display">{USERNAME}</h2>
             <img id="pic-display" height="100" width="100" src="./../../resources/resources_global/placeholder.png">
             <ul>
-                <li><a class="activeLink">Home</a></li>
-                <li><a>Games</a></li>
-                <li><a>News</a></li>
-                <li><a>Leaderboards</a></li>
+                <li><a class="link-active" id="home-link" onclick="sidebarHandler('home-link','home-section')">Home</a></li>
+                <li><a id="games-link" onclick="sidebarHandler('home-link','games-section')">Games</a></li>
+                <li><a id="news-link" onclick="sidebarHandler('home-link','news-section')">News</a></li>
+                <li><a id="leaderboards-link" onclick="sidebarHandler('home-link','leaderboards-section')">Leaderboards</a></li>
             </ul>
             <div>
                 <a><img src="./../../resources/resources_global/settings.png" width="10" height="10"></a> <a onclick='document.getElementById("signout-warn").showModal()'><img src="./../../resources/resources_global/logout.png" width="10" height="10"></a>
             </div>
         </div>
-        <div class="section" id="home-section" hidden>
+        <div class="section" id="home-section">
             <h1>Home</h1>
         </div>
-        <div class="section" id="games-section" hidden>
+        <div class="section" id="games-section">
             <h1>Games</h1>
         </div>
-        <div class="section" id="news-section" hidden>
+        <div class="section" id="news-section">
             <h1>News</h1>
         </div>
-        <div class="section" id="leaderboards-section" hidden>
+        <div class="section" id="leaderboards-section">
             <h1>Leaderboards</h1>
         </div>
         <div class="section" id="settings-section">

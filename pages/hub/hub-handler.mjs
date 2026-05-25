@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
 import { getFirestore, collection as col, doc, addDoc, deleteDoc, getDoc as get, setDoc as set, getDocs as getm, query, orderBy, limit, onSnapshot as onSnap, Timestamp, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
-import { getAuth, onAuthStateChanged, GoogleAuthProvider, signOut} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, GoogleAuthProvider, reauthenticateWithCredential, signOut} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCNRUASOXGQabiR8LGBzKP6BDSEEAHdTR8",
@@ -86,6 +86,14 @@ function displayData() {
     document.getElementById("pic-display").src = account.photoURL;
 }
 
+function sidebarHandler(linkName,sectionName) {
+    console.log(document.getElementsByClassName("link-active")[0])
+    document.getElementsByClassName("link-active")[0].className = "";
+    document.getElementById(linkName).className = "link-active";
+    document.getElementsByClassName("section-active")[0].className = "";
+    document.getElementById(sectionName).className = "section-active";
+} // FOR THE LOVE OF GOD FIX THIS
+
 function eraseData() {
 
 }
@@ -114,4 +122,5 @@ try {
 };
 
 globalThis.setupUser = setupUser;
+globalThis.sidebarHandler = sidebarHandler;
 globalThis.deleteAccountPhase1 = deleteAccountPhase1;

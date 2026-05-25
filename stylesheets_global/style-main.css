@@ -59,7 +59,7 @@
             color: rgb(73, 73, 73);
             margin-top: 10px;
         }
-        .activeLink {
+        .link-active {
             color: white;
             font-weight: bold;
         }
