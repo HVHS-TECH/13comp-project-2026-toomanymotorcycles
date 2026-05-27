@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
 import { getFirestore, collection as col, doc, addDoc, deleteDoc, getDoc as get, setDoc as set, getDocs as getm, query, orderBy, limit, onSnapshot as onSnap, Timestamp, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
-import { getAuth, onAuthStateChanged, GoogleAuthProvider, reauthenticateWithCredential, signOut} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, GoogleAuthProvider, promptForCredentials, reauthenticateWithCredential, deleteUser, signOut} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCNRUASOXGQabiR8LGBzKP6BDSEEAHdTR8",
@@ -87,13 +87,18 @@ function displayData() {
 }
 
 function sidebarHandler(linkName,sectionName) {
-    console.log(document.getElementsByClassName("link-active")[0])
     document.getElementsByClassName("link-active")[0].className = "";
     document.getElementById(linkName).className = "link-active";
-    document.getElementsByClassName("section-active")[0].className = "";
+    document.getElementsByClassName("section-active")[0].className = "section";
     document.getElementById(sectionName).className = "section-active";
-} // FOR THE LOVE OF GOD FIX THIS
+}
 
+function reauthenticateUser() {
+    const credential = promptForCredentials();
+    reauthenticateWithCredential(getAuth.currentUser, credential).then(() => {
+    }).catch((error) => {
+    });
+}//convert to promise
 function eraseData() {
 
 }
@@ -106,7 +111,12 @@ function deleteAccountPhase1() {
 }
 
 function deleteAccountPhase2() {
-    
+    deleteUser(user).then(() => {
+        // User deleted.
+    }).catch((error) => {
+        // An error ocurred
+        // ...
+    });
 }
 
 try {
@@ -123,4 +133,5 @@ try {
 
 globalThis.setupUser = setupUser;
 globalThis.sidebarHandler = sidebarHandler;
+globalThis.reauthenticateUser = reauthenticateUser;
 globalThis.deleteAccountPhase1 = deleteAccountPhase1;

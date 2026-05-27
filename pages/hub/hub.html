@@ -45,15 +45,15 @@
             <img id="pic-display" height="100" width="100" src="./../../resources/resources_global/placeholder.png">
             <ul>
                 <li><a class="link-active" id="home-link" onclick="sidebarHandler('home-link','home-section')">Home</a></li>
-                <li><a id="games-link" onclick="sidebarHandler('home-link','games-section')">Games</a></li>
-                <li><a id="news-link" onclick="sidebarHandler('home-link','news-section')">News</a></li>
-                <li><a id="leaderboards-link" onclick="sidebarHandler('home-link','leaderboards-section')">Leaderboards</a></li>
+                <li><a id="games-link" onclick="sidebarHandler('games-link','games-section')">Games</a></li>
+                <li><a id="news-link" onclick="sidebarHandler('news-link','news-section')">News</a></li>
+                <li><a id="leaderboards-link" onclick="sidebarHandler('leaderboards-link','leaderboards-section')">Leaderboards</a></li>
             </ul>
             <div>
-                <a><img src="./../../resources/resources_global/settings.png" width="10" height="10"></a> <a onclick='document.getElementById("signout-warn").showModal()'><img src="./../../resources/resources_global/logout.png" width="10" height="10"></a>
+                <a id="settings-link" onclick="sidebarHandler('settings-link','settings-section')"><img src="./../../resources/resources_global/settings.png" width="10" height="10"></a> <a onclick='document.getElementById("signout-warn").showModal()'><img src="./../../resources/resources_global/logout.png" width="10" height="10"></a>
             </div>
         </div>
-        <div class="section" id="home-section">
+        <div class="section-active" id="home-section">
             <h1>Home</h1>
         </div>
         <div class="section" id="games-section">
@@ -144,7 +144,7 @@
     </dialog>
     <dialog id="account-delete-warn" closedby="any">
         <h1 class="warning-header">WARNING</h1>
-        <h3>You are about to request account deletion.</h3>
+        <h3>You are about to delete your account.</h3>
         <p>Once you do this, <i>there really is no going back.</i> Please be certain of your decision before moving forward.<br>If you are sure that you would like to completely delete your account, please type your username below to confirm.</p>
         <form>
             <input class="wide-input" id="account-delete-conftest" type="text" value="">
@@ -155,7 +155,7 @@
         <h1 class="warning-header">FINAL WARNING</h1>
         <h3>Account deletion imminent.</h3>
         <p>Account deletion is <b>FINAL.</b> Once complete, your account will be <b>UNRECOVERABLE.</b><br><i><b>Are you really sure that you want to do this?</b></i></p>
-        <button>Cancel</button><button class="redwarn"><b>Confirm deletion</b></button>
+        <button>Cancel</button><button class="redwarn" onclick="deleteAccountPhase2()"><b>Confirm deletion</b></button>
     </dialog>
 </body>
 </html>
