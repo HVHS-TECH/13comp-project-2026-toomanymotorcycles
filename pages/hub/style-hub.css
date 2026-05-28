@@ -17,6 +17,9 @@
     margin: auto;
     border-radius: 50%;
 }
+#reauthenticate-form {
+    
+}
 .container {
     display: flex;
 }

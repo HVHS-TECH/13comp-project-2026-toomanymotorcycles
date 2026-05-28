@@ -81,7 +81,7 @@
                     <img src="./../../resources/resources_global/padlock.png" width="60" height="60">
                     <h2>LOCKED</h2>
                     <p>For your safety, you must re-authenticate in order to access these settings.</p>
-                    <button class="em-button"><b>Reauthenticate</b></button>
+                    <button class="em-button"onclick="document.getElementById('reauthenticate-form').showModal()"><b>Reauthenticate</b></button>
                 </div>
                 <div class="authlock-content" hidden>
                     <form id="settings-section-security">
@@ -101,7 +101,7 @@
                     <img src="./../../resources/resources_global/padlock.png" width="60" height="60">
                     <h2>LOCKED</h2>
                     <p>For your safety, you must re-authenticate in order to access these settings.</p>
-                    <button class="em-button"><b>Reauthenticate</b></button>
+                    <button class="em-button"onclick="document.getElementById('reauthenticate-form').showModal()"><b>Reauthenticate</b></button>
                 </div>
                 <div class="authlock-content" hidden>
                     <button class="redwarn" onclick="document.getElementById('data-erase-warn').showModal();">ERASE DATA</button><button class="redwarn" onclick="document.getElementById('account-delete-warn').showModal();">REQUEST ACCOUNT DELETION</button>
@@ -156,6 +156,18 @@
         <h3>Account deletion imminent.</h3>
         <p>Account deletion is <b>FINAL.</b> Once complete, your account will be <b>UNRECOVERABLE.</b><br><i><b>Are you really sure that you want to do this?</b></i></p>
         <button>Cancel</button><button class="redwarn" onclick="deleteAccountPhase2()"><b>Confirm deletion</b></button>
+    </dialog>
+    <dialog id="reauthenticate-form" closedby="any">
+        <h1>Reauthenticate</h1>
+        <form>
+            <input class="wide-input" id="reauth-user" type="text" value="" placeholder="Email">
+            <input class="wide-input" id="reauth-pass" type="password" value="" placeholder="Password">
+        </form>
+        <p class="error" id="userpass-error" hidden>Authentication failed.</p>
+        <button class="em-button" id="login-button" onclick=""><b>Reauthenticate</b></button>
+        <h2 style="text-align: center;">--- or ---</h2>
+        <button class="em-button" id="google-button" onclick="reauthenticateUser()"><b>Reauthenticate with Google</b></button>
+        <p class="error" id="google-error" hidden>Internal authentication error, try again later.</p>
     </dialog>
 </body>
 </html>

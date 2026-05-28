@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
 import { getFirestore, collection as col, doc, addDoc, deleteDoc, getDoc as get, setDoc as set, getDocs as getm, query, orderBy, limit, onSnapshot as onSnap, Timestamp, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
-import { getAuth, onAuthStateChanged, GoogleAuthProvider, promptForCredentials, reauthenticateWithCredential, deleteUser, signOut} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, GoogleAuthProvider, reauthenticateWithCredential, deleteUser, signOut} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCNRUASOXGQabiR8LGBzKP6BDSEEAHdTR8",
@@ -93,9 +93,15 @@ function sidebarHandler(linkName,sectionName) {
     document.getElementById(sectionName).className = "section-active";
 }
 
-function reauthenticateUser() {
-    const credential = promptForCredentials();
-    reauthenticateWithCredential(getAuth.currentUser, credential).then(() => {
+function reauthenticateUser(password) {
+    var credential;
+    if (password) {
+        credential = getAuth().EmailAuthProvider.credential(user.email, password);
+    } else {
+        credential= getAuth().GoogleAuthProvider.credential();
+    }
+    reauthenticateWithCredential(getAuth().currentUser, credential).then(() => {
+        
     }).catch((error) => {
     });
 }//convert to promise
@@ -111,7 +117,7 @@ function deleteAccountPhase1() {
 }
 
 function deleteAccountPhase2() {
-    deleteUser(user).then(() => {
+    deleteUser(getAuth.currentUser()).then(() => {
         // User deleted.
     }).catch((error) => {
         // An error ocurred
@@ -135,3 +141,4 @@ globalThis.setupUser = setupUser;
 globalThis.sidebarHandler = sidebarHandler;
 globalThis.reauthenticateUser = reauthenticateUser;
 globalThis.deleteAccountPhase1 = deleteAccountPhase1;
+globalThis.deleteAccountPhase2 = deleteAccountPhase2;
