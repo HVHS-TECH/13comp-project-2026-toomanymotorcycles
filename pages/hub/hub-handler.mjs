@@ -32,6 +32,9 @@ function init() {
                 if (snap.exists()) {
                     username = snap.data().username;
                     globalCanReceiveAds = snap.data().canReceiveAds;
+                    if (typeof snap.data().admin != undefined && snap.data().admin == true) {
+                        document.getElementById("admin-link").removeAttribute("hidden");
+                    }
                     displayData();
                     document.getElementById("loading").setAttribute("hidden",true);
                     document.getElementById("page").removeAttribute("style");
