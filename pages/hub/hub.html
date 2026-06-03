@@ -22,6 +22,7 @@
         </style>
     </noscript>
     <script src="dynamic-page-gen-module.mjs" type="module"></script>
+    <script src="lobby-module.mjs" type="module"></script>
     <script src="hub-handler.mjs" type="module"></script>
 </head>
 <body>
@@ -60,7 +61,7 @@
         </div>
         <div class="section" id="games-section">
             <h1>Games</h1>
-            <div class="games-container">
+            <div id="games-container">
                 <!-- DYNAMICALLY GENERATED WHEN PAGE IS LOADED -->
             </div>
         </div>
@@ -164,9 +165,10 @@
         <button>Cancel</button><button class="redwarn" onclick="deleteAccountPhase2()"><b>Confirm deletion</b></button>
     </dialog>
     <dialog id="multiplayer-game-description" closedby="none">
-        <img class="dsc-banner" id="mgdsc-banner">
-        <h2 class="dsc-header" id="mgdsc-header">GAME TITLE</h2>
-        <p class="dsc-para" id="mgdsc-para">Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias sint perferendis provident placeat magni deleniti assumenda? Soluta, earum excepturi doloribus optio dolor nemo, hic, nihil consectetur beatae eius ut cumque!<br><b>If you're seeing this, something has gone very wrong.</b></p>
+        <a onclick="document.getElementById('multiplayer-game-description').close()">X</a>
+        <img class="dsc-banner">
+        <h2 class="dsc-header">GAME TITLE</h2>
+        <p class="dsc-para">Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias sint perferendis provident placeat magni deleniti assumenda? Soluta, earum excepturi doloribus optio dolor nemo, hic, nihil consectetur beatae eius ut cumque!<br><b>If you're seeing this, something has gone very wrong.</b></p>
         <hr>
         <h2>// JOIN WITH LOBBY CODE</h2>
         <form>
