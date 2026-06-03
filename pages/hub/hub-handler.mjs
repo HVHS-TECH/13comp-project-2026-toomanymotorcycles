@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebas
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
 import { getFirestore, collection as col, doc, addDoc, deleteDoc, getDoc as get, setDoc as set, getDocs as getm, query, orderBy, limit, onSnapshot as onSnap, Timestamp, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, reauthenticateWithCredential, deleteUser, signOut} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+import { generatePage } from "./dynamic-page-gen-module.mjs";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCNRUASOXGQabiR8LGBzKP6BDSEEAHdTR8",
@@ -36,6 +37,7 @@ function init() {
                         document.getElementById("admin-link").removeAttribute("hidden");
                     }
                     displayData();
+                    generatePage(app);
                     document.getElementById("loading").setAttribute("hidden",true);
                     document.getElementById("page").removeAttribute("style");
                     console.log("CDS: Initialisation complete.");
