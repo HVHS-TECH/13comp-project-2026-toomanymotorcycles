@@ -21,7 +21,7 @@ class Lobby {
                 this.joinable = true;
             }
         })
-        // set up event listener to detect whenever the database data changes
+        // set up event listeners to detect whenever any object within a lobby changes and any data within the main database changes
     }
 
     fallback() {
