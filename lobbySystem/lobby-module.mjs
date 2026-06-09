@@ -1,28 +1,40 @@
-import { getFirestore, collection as col, doc, addDoc, deleteDoc, getDoc as get, setDoc as set, getDocs as getm, query, orderBy, limit, onSnapshot as monitor, Timestamp, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
 import { getAuth } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
 var activeLobbies = [];
 class Lobby {
     constructor(gameID, lobbyID, host, maxPlayerCount, playerList, joinable, data) {
-        if (lobbyID == 0) {this.lobbyID = Math.round(Math.random()^2*10)} else {this.lobbyID = lobbyID}
+        //once created, these values are never interacted with
+        //all interaction is handled through the mutation handler proxy function
+        //which handles sending data to the server
+        if (lobbyID == 0) {this.lobbyID = Math.round(Math.random()^2*10)} else {this.lobbyID = lobbyID};
+        this.gameID = gameID;
         this.host = host;
         this.maxPlayerCount = null;
         this.playerList = [];
         this.joinable = null;
         this.data = null;
-        get(doc(db, gameEntries, gameID)).then((snap) => {
+        this.mutationHandler = {
+            set(mutatedData) {
+
+            }
+        }
+        get(doc(db, "gameEntries", gameID)).then((snap) => {
             if (snap.exists()) {
-                this.maxPlayerCount = 2;
+                this.maxPlayerCount = snap.data.maxPlayers;
             } else {
                 console.error("The requested game does not exist.");
                 this = null;
             }
             if (this.host == getAuth().currentUser.uid) {
                 this.playerList.push(getAuth().currentUser.uid);
-
                 this.joinable = true;
             }
         });
+    }
+
+    initiateProxyConnection() {
+
     }
 
     join() {
@@ -58,23 +70,11 @@ class Lobby {
     }
 }
 
-const lobbyUpdater = {
-    toFirestore: (lobby) => {
-        return {
-            players = lobby.host,
-            maxPlayerCount = lobby.maxPlayerCount,
-            playerList = lobby.playerList,
-            joinable = lobby.joinable,
-            data = lobby.data
-        };
-    },
-    fromFirestore: (snapshot, options) => {
-        const data = snapshot.data(options);
-        return new Lobby(data.host, data.maxPlayerCount, data.playerList, data.joinable, data.data);
-    }
-};
-
 export function getLobbies() {}
 
 //okay, so the solution is a mutation observer, i can set on up on all lobbies that updates all changed values in the database.
 //if i don't sleep, I won't be able to think, so I should probably sleep
+
+//DAMN THE SUNK COST FALLACY I'M REBUILDING MY ARCHITECTURE
+//BADLY BUILT GOVERNMENT SOFTWARE STYLE A.K.A TWO DATABASES
+//BECAUSE REBUILDING THE OTHER ONE WOULD TAKE TOO LONG
