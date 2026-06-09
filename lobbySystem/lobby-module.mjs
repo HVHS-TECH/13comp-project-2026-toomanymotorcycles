@@ -1,7 +1,12 @@
-
+import { getFirestore, collection as col, doc, getDoc, getDocs as getm, query, orderBy, limit, onSnapshot as onSnap } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+import { getDatabase, ref, get, runTransaction } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
 var activeLobbies = [];
+
+const fdb = getFirestore();
+const rtdb = getDatabase();
+
 class Lobby {
     constructor(gameID, lobbyID, host, maxPlayerCount, playerList, joinable, data) {
         //once created, these values are never interacted with
@@ -14,12 +19,7 @@ class Lobby {
         this.playerList = [];
         this.joinable = null;
         this.data = null;
-        this.mutationHandler = {
-            set(mutatedData) {
-
-            }
-        }
-        get(doc(db, "gameEntries", gameID)).then((snap) => {
+        getDoc(doc(fdb, "gameEntries", gameID)).then((snap) => {
             if (snap.exists()) {
                 this.maxPlayerCount = snap.data.maxPlayers;
             } else {
@@ -43,7 +43,10 @@ class Lobby {
         if (!this.joinable) {console.warn("You cannot join this lobby."); return false;}
         if (this.playerList.length >= this.maxPlayerCount) {console.warn("This lobby is full."); return false;}
         this.playerList.push(getAuth().currentUser.uid);
-        return true;
+        runTransaction(ref(db, `/gameLobbies/${lobbyID}/playerList`), (serverLobbyData) => {
+            serverLobbyData.playerList = {value: this.playerList};
+            return serverLobbyData;
+        });
     }
 
     leave() {
