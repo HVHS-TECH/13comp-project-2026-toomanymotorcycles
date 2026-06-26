@@ -7,6 +7,7 @@ import { generatePage } from "./dynamic-page-gen-module.mjs";
 const firebaseConfig = {
   apiKey: "AIzaSyCNRUASOXGQabiR8LGBzKP6BDSEEAHdTR8",
   authDomain: "comp-2025-joshua-kh.firebaseapp.com",
+  databaseURL: "https://comp-2025-joshua-kh-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "comp-2025-joshua-kh",
   storageBucket: "comp-2025-joshua-kh.firebasestorage.app",
   messagingSenderId: "666152943807",
