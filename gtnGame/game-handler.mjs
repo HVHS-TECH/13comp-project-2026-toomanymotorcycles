@@ -9,11 +9,11 @@ var lastRecordedTurn = -1;
 // 4: round over, lose
 
 function onTurnBegin() {
-    if (globalThis.joinedLobby.data.turn == globalThis.joinedLobby.playerList.value.findIndex(globalThis.userID)) {
+    if (globalThis.joinedLobby.data.turn + 1 == globalThis.joinedLobby.playerList.value.findIndex(globalThis.userID)) {
         console.log("Current client is now active.");
         gameState = 1;
     } else {
-        console.log(`Player ${activePlayer} is now active.`);
+        console.log(`Player ${globalThis.joinedLobby.data.turn} is now active.`);
         gameState = 0;
     }
 }
@@ -23,6 +23,8 @@ function onTurnEnd(submittedGuess) {
         globalThis.joinedLobby.data.value.guess = submittedGuess;
         globalThis.joinedLobby.data.value.response = -2
         gameState = 2;
+    } else {
+        console.warn("Wait your turn, please.");
     }
 }
 
@@ -84,7 +86,7 @@ globalThis.resubscribeToLobby(() => {
     globalThis.joinedLobby.onLobbyDataUpdate = () => {
         try {
         if (userType == "host" && typeof globalThis.joinedLobby.data.value.response != "undefined" && globalThis.joinedLobby.data.value.response == 0 && globalThis.joinedLobby.data.value.confirm == true) {
-            globalThis.joinedLobby.data.value.turn ++;
+            globalThis.joinedLobby.data.value.turn = (globalThis.joinedLobby.data.value.turn + 1) % globalThis.joinedLobby.maxPlayerCount.value;
         }
         if (userType == "host" && typeof globalThis.joinedLobby.data.value.response != "undefined" && globalThis.joinedLobby.data.value.response == -2) {
             hostCheck();
@@ -104,3 +106,5 @@ globalThis.resubscribeToLobby(() => {
         }
     }
 });
+
+globalThis.respond = onTurnEnd();

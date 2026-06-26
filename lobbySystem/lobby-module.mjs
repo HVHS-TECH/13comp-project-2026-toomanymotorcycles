@@ -28,28 +28,34 @@ const firebaseConfig = {
 //TECHNICAL DEBT YAY
 //Never mind, I fixed it.
 
-const initialised = false;
 const app = initializeApp(firebaseConfig);
 const rtdb = getDatabase(app);
 const rdtbRef = ref(rtdb);
 const fsdb = getFirestore(app);
 
+//initialisation constants, these give commonly-used references to the database and its various apps and systems
+
 console.info("-------------------------------------\n------- CDS LOBBY MODULE V1.0 -------\n------ COPYRIGHT OF CHAOS INC. ------\n-------------------------------------");
 
 class ActiveLobby {
-    lobbyID = null;
-    gameID = null;
-    onLobbyDataUpdate = null;
-    #userUID = getAuth().currentUser.uid;
-    #host = {value: ""};
-    #maxPlayerCount = {value: 0};
-    #playerList = {};
-    #joinable = {value: false};
-    #data = {value: {}};
-    #hostData = {value: {}};
-    #holdDataUpdates = {value: false};
-    heldDataUpdates = {}
+    lobbyID = null; //the ID of the monitored lobby, used to identify it within the database and client-side code
+    gameID = null; //the ID of the game that the lobby has been created under
+    onLobbyDataUpdate = null; // A field that takes a function. Said function is called every time the lobby server data is updated.
+    
+    // Private fields that can only be modified through proxy objects. This ensures that any attempt to update them is intercepted and sent to the database.
 
+    #userUID = null; // the UID of the current user, null if there is no user. Not linked to the database, instead made private to hinder attempts to change it, as any changes would break the client script.
+    #host = {value: ""}; // the lobby's host, linked directly with the server database.
+    #maxPlayerCount = {value: 0}; // the lobby's max player count, linked directly with the server database.
+    #playerList = {}; // the lobby's player list, linked directly with the server database.
+    #joinable = {value: false}; // whether or not the lobby is joinable, linked directly with the server database.
+    #data = {value: {}}; // the data within the lobby, linked directly with the server database.
+    #hostData = {value: {}}; // data only visible to the lobby's host, linked directly with the server database.
+    #holdDataUpdates = {value: false}; // a holdover from a previous attempt, kept just in case. Signals to the system to hold database updates until further notice.
+    
+    heldDataUpdates = {} // a list of all held database updates, written simultaneously when a hold is released.
+
+    //Proxy handlers. These intercept attempts to set private lobby object data values and send the updates to the server.
     hostProxyHandler = {set(existingVal, prop, newVal) {
         console.log("Database transaction.")
         try {
@@ -137,6 +143,7 @@ class ActiveLobby {
         }
     }
 
+    //The proxy objects themselves. Upon being edited, passes the value to both the handlers and the private object fields.
     host = new Proxy(this.#host,this.hostProxyHandler);
     maxPlayerCount = new Proxy(this.#maxPlayerCount,this.MPCProxyHandler);
     joinable = new Proxy(this.#joinable,this.joinableProxyHandler);
@@ -145,14 +152,16 @@ class ActiveLobby {
     holdDataUpdates = new Proxy(this.#holdDataUpdates,this.holdDataUpdatesProxyHandler);
 
     static generateCode() {
-        //I stole this from geeksforgeeks.org, public domain or creative commons I think.
+        //I stole this from geeksforgeeks.org, public domain or creative commons I think. Generates a pin code used as the lobby ID upon creation of a lobby.
         let result = '';
         for (let i = 0; i < 5; i++) {
             result += String.fromCharCode(97 + Math.floor(Math.random() * 26));
         }
         return result;
     }
+    
     constructor(lobbyID, gameID, executeAfter) {
+        this.#userUID = getAuth().currentUser.uid;
         this.gameID = gameID;
         if (lobbyID == 0) {
             console.log("Lobby created.")
