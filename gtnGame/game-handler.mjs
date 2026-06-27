@@ -111,4 +111,4 @@ globalThis.resubscribeToLobby(() => {
     }
 });
 });
-globalThis.respond = onTurnEnd();
+globalThis.respond = onTurnEnd;
