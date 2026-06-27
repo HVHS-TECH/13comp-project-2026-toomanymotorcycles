@@ -1,3 +1,6 @@
+import { getAuth, onAuthStateChanged, GoogleAuthProvider, reauthenticateWithCredential, deleteUser, signOut} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+
+
 var userType = null;
 var gameState = -1;
 var lastRecordedTurn = -1;
@@ -73,6 +76,7 @@ function onLose() {
     console.log(`Player ${globalThis.joinedLobby.data.value.turn} wins.`);
 }
 
+onAuthStateChanged(getAuth(), (user) => {
 globalThis.resubscribeToLobby(() => {
     if (globalThis.joinedLobby.host.value == globalThis.userID) {
         userType = "host";
@@ -106,5 +110,5 @@ globalThis.resubscribeToLobby(() => {
         }
     }
 });
-
+});
 globalThis.respond = onTurnEnd();
