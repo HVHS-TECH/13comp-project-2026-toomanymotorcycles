@@ -328,7 +328,8 @@ function leaveLobby() {
 }
 
 function resubscribeToLobby(callback) {
-    joinedLobby = new ActiveLobby(sessionStorage.getItem("lobbyID"),sessionStorage.getItem("lobbyID"),callback); 
+    console.log(sessionStorage.getItem("lobbyID")+" "+sessionStorage.getItem("gameID"));
+    joinedLobby = new ActiveLobby(sessionStorage.getItem("lobbyID"),sessionStorage.getItem("gameID"),callback); 
 }
 
 function destroyLobby() {
