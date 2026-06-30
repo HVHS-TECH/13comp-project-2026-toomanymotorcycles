@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-import { getFirestore, collection as col, doc, getDoc, getDocs as getm, query, orderBy, limit, onSnapshot as onSnap } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+import { getFirestore, collection as col, doc, getDoc as fsget, getDocs as fsgetm, updateDoc as fsupdate, query, orderBy, limit, onSnapshot as onSnap, increment } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 import { getDatabase, ref, get as rtdbget, set as rtdbset, update as rtdbupdate, onValue, onDisconnect, runTransaction } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
 //I know I'm using both types of database, and I know that this is inefficiency given form. Shut up. Rebuilding my entire architecture would take too long.
 
@@ -49,8 +49,8 @@ class ActiveLobby {
     #maxPlayerCount = {value: 0}; // the lobby's max player count, linked directly with the server database.
     #playerList = {}; // the lobby's player list, linked directly with the server database.
     #joinable = {value: false}; // whether or not the lobby is joinable, linked directly with the server database.
-    #data = {value: {}}; // the data within the lobby, linked directly with the server database.
-    #hostData = {value: {}}; // data only visible to the lobby's host, linked directly with the server database.
+    #data = {placeholder: "yes"}; // the data within the lobby, linked directly with the server database.
+    #hostData = {placeholder: "yes"}; // data only visible to the lobby's host, linked directly with the server database.
     #holdDataUpdates = {value: false}; // a holdover from a previous attempt, kept just in case. Signals to the system to hold database updates until further notice.
     
     heldDataUpdates = {} // a list of all held database updates, written simultaneously when a hold is released.
@@ -69,6 +69,13 @@ class ActiveLobby {
             console.warn(`Database sync failed.\n${err}`);
             Reflect.set(this, prop, existingVal);
         }
+        return true;
+    }};
+    PLProxyHandler = {set(existingVal, prop, newVal) {
+        if (newVal != existingVal) {
+            Reflect.set(this, prop, existingVal);
+        }
+        return true;
     }};
     MPCProxyHandler = {set(existingVal, prop, newVal) {
         try {
@@ -82,6 +89,7 @@ class ActiveLobby {
             console.warn(`Database sync failed.\n${err}`);
             Reflect.set(this, prop, existingVal);
         }
+        return true;
     }};
     joinableProxyHandler = {set(existingVal, prop, newVal) {
         try {
@@ -95,21 +103,19 @@ class ActiveLobby {
             console.warn(`Database sync failed.\n${err}`);
             Reflect.set(this, prop, existingVal);
         }
+        return true;
     }};
     dataProxyHandler = {set(existingVal, prop, newVal) {
         try {
-            if (!this.holdDataUpdates) {
             console.log(`Database sync.`);
             rtdbset(ref(rtdb, `/gameLobbies/${this.gameID}/${this.lobbyID}/data/${prop}`), newVal).then(()=> {
                 console.log(`Database sync complete.`);
             });
-            } else {
-                this.mainLobbyReference.heldDataUpdates[prop] = newVal;
-            }
         } catch (err) {
             console.warn(`Database sync failed.\n${err}`);
             Reflect.set(this, prop, existingVal);
         }
+        return true;
     }};
     hostDataProxyHandler = {set(existingVal, prop, newVal) {
         try {
@@ -121,8 +127,9 @@ class ActiveLobby {
             console.warn(`Database sync failed.\n${err}`);
             Reflect.set(this, prop, existingVal);
         }
+        return true;
     }};
-    holdDataUpdatesProxyHandler = {
+    holdDataUpdatesProxyHandler = { // Never actually used. Kept because I might fix it after the assessment is finished.
         updateLoop() {
             try {
                 rtdbupdate(ref(rtdb, `/gameLobbies/${this.gameID}/${this.lobbyID}/data`), this.mainLobbyReference.heldDataUpdates).then(()=> {
@@ -140,15 +147,17 @@ class ActiveLobby {
                 console.warn("Hold released. Sending held updates...");
                 this.updateLoop();
             }
+            return true;
         }
     }
 
     //The proxy objects themselves. Upon being edited, passes the value to both the handlers and the private object fields.
     host = new Proxy(this.#host,this.hostProxyHandler);
+    playerList = new Proxy(this.#playerList,this.PLProxyHandler);
     maxPlayerCount = new Proxy(this.#maxPlayerCount,this.MPCProxyHandler);
     joinable = new Proxy(this.#joinable,this.joinableProxyHandler);
     data = new Proxy(this.#data,this.dataProxyHandler);
-    hostData = new Proxy(this.#data,this.hostDataProxyHandler);
+    hostData = new Proxy(this.#hostData,this.hostDataProxyHandler);
     holdDataUpdates = new Proxy(this.#holdDataUpdates,this.holdDataUpdatesProxyHandler);
 
     static generateCode() {
@@ -161,6 +170,7 @@ class ActiveLobby {
     }
     
     constructor(lobbyID, gameID, executeAfter) {
+        globalThis.joinedLobby = this;
         this.#userUID = getAuth().currentUser.uid;
         this.gameID = gameID;
         if (lobbyID == 0) {
@@ -169,13 +179,12 @@ class ActiveLobby {
             console.log("Lobby code: "+this.lobbyID);
             var newPlayerList = new Map();
             newPlayerList.set(0, "ANCHOR");
-            newPlayerList.set(newPlayerList.size, this.#userUID);
             rtdbset(ref(rtdb, `/gameLobbies/${this.gameID}/${this.lobbyID}`), {
                 host: this.#userUID,
                 maxPlayerCount: 2,
                 playerList: Object.fromEntries(newPlayerList.entries()),
                 joinable: true,
-                data: {turn:0, guess:-1, response:0, confirm:false},
+                data: {turn:0, guess:-1, response:0, confirm:false, winner:-1},
                 hostData: {secretNumber: Math.floor((Math.random()*10)*(Math.random()*10))}
             })
         } else {
@@ -200,24 +209,35 @@ class ActiveLobby {
 
         this.dataUpdater = onValue(lobbyReference, (lobbyData) => {
             if (lobbyData.exists()) {
-                console.log(lobbyData.val());
                 this.#host.value = lobbyData.val().host;
                 this.#maxPlayerCount.value = lobbyData.val().maxPlayerCount;
                 this.#playerList.value = lobbyData.val().playerList;
                 this.#joinable.value = lobbyData.val().joinable;
-                this.#data.value = lobbyData.val().data;
-                if(this.#host == this.#userUID) {
-                    this.#hostData.value = lobbyData.val().hostData;
+                this.#data = lobbyData.val().data;
+                if(this.#host.value == this.#userUID) {
+                    this.#hostData = lobbyData.val().hostData;
                 } else {
-                    this.#hostData.value = null;
+                    this.#hostData = {host: false};
                 }
+                this.host = new Proxy(this.#host,this.hostProxyHandler);
+                this.playerList = new Proxy(this.#playerList,this.PLProxyHandler);
+                this.maxPlayerCount = new Proxy(this.#maxPlayerCount,this.MPCProxyHandler);
+                this.joinable = new Proxy(this.#joinable,this.joinableProxyHandler);
+                this.data = new Proxy(this.#data,this.dataProxyHandler);
+                this.hostData = new Proxy(this.#hostData,this.hostDataProxyHandler);
+                globalThis.joinedLobby = this;
                 if (typeof this.onLobbyDataUpdate == "function") {
-                    this.onLobbyDataUpdate();
+                    this.onLobbyDataUpdate(this);
                 } else {
                     console.warn("Lobby data update listener inactive or invalid.")
                 }
             } else {
-                console.error("Invalid lobby.");
+                this.dataUpdater();
+                joinedLobby = null;
+                globalThis.joinedLobby = null;
+                sessionStorage.clear();
+                delete this;
+                throw new Error(("Lobby is either invalid or it has been destroyed."));
             }
         });
         executeAfter(this);
@@ -234,6 +254,19 @@ class ActiveLobby {
                 return existingVal;
             }).then(() => {
                 console.log("Lobby joined.")
+                globalThis.joinedLobby = this;
+                document.getElementById("multiplayer-lobby").showModal();
+                document.getElementById("lobby-code").innerText = this.lobbyID;
+                try {
+                    fsget(doc(fsdb, 'gameEntries', this.gameID)).then((data) => {
+                        if (data.exists()) {
+                            document.getElementById("lobby-title").innerText = data.data().name; 
+                        }
+                    })
+                } catch {
+                    document.getElementById("lobby-title").innerText = this.gameID;
+                }
+                
             })
         } catch (err) {
             console.warn(`Attempt to join lobby failed.\n${err}`)
@@ -247,7 +280,7 @@ class ActiveLobby {
             runTransaction(ref(rtdb, `/gameLobbies/${this.gameID}/${this.lobbyID}/playerList`), (existingVal) => {
                 if(existingVal.includes(this.#userUID)) {
                     console.log("Leaving lobby...")
-                    existingVal.splice(existingVal.indexOf(this.#userUID),1);
+                    if (this.#joinable) {existingVal.splice(existingVal.indexOf(this.#userUID),1)} else {existingVal.splice(existingVal.indexOf(this.#userUID),1,"PLAYERLEFT")};
                 } else {
                     throw new Error("You are not in this lobby.");
                 }
@@ -259,6 +292,7 @@ class ActiveLobby {
                 globalThis.joinedLobby = null;
                 sessionStorage.clear();
                 delete this;
+                document.getElementById("multiplayer-lobby").close();
             })
         } catch (err) {
             console.warn(`Attempt to leave lobby failed.\n${err}`)
@@ -314,38 +348,60 @@ function setupLobbyListener() {
     })
 }
 
-function joinLobby(lobbyID,gameID) {
-    joinedLobby = new ActiveLobby(lobbyID,gameID,(lobby) => {
+function joinLobby(lobbyID,gameID,onUpdate) {
+    globalThis.joinedLobby = new ActiveLobby(lobbyID,gameID,(lobby) => {
         lobby.join();
         sessionStorage.setItem("lobbyID",lobbyID);
         sessionStorage.setItem("gameID",gameID);
+        if (typeof onUpdate == "function") {
+            lobby.onLobbyDataUpdate = onUpdate;
+        }
     });
-    globalThis.joinedLobby = joinedLobby;
 }
 
 function leaveLobby() {
-    joinedLobby.leave();
+    globalThis.joinedLobby.leave();
 }
 
 function resubscribeToLobby(callback) {
     console.log(sessionStorage.getItem("lobbyID")+" "+sessionStorage.getItem("gameID"));
-    joinedLobby = new ActiveLobby(sessionStorage.getItem("lobbyID"),sessionStorage.getItem("gameID"),callback); 
+    globalThis.joinedLobby = new ActiveLobby(sessionStorage.getItem("lobbyID"),sessionStorage.getItem("gameID"),callback);
 }
 
 function destroyLobby() {
-    joinedLobby.destroy();
+    globalThis.joinedLobby.destroy();
 }
 
-function saveHighScore(score) {
-
+function saveImportantScore(score, increment, gameID) {
+    const dataToSave = new Map();
+    var gameIDToUse;
+    if (!globalThis.userID) {throw new Error("You are not logged in. This function will not work without a valid user.")};
+    if (!gameID) {gameIDToUse = gameID} else {gameIDToUse = globalThis.joinedLobby.gameID};
+    fsget(doc(db, 'users', globalThis.userID)).then((data) => {
+        if (increment) {dataToSave.set(data.data().username,increment(score))} else {dataToSave.set(data.data().username,score)};
+        try {
+            fsupdate(doc(db, 'importantScores', gameIDToUse), dataToSave);
+            } catch (err) {
+            if (false) {
+                console.warn(`Permission denied.\nYou are either not logged in, or you have somehow attempted to change another user's score.`);
+            } else {
+                console.warn(`Score update failed.\n${err}`);
+            }
+        }
+    })
+    
+    
 }
 
 globalThis.joinLobby = joinLobby;
 globalThis.leaveLobby = leaveLobby;
 globalThis.resubscribeToLobby = resubscribeToLobby;
 globalThis.destroyLobby = destroyLobby;
-globalThis.saveHighScore = saveHighScore;
-globalThis.userID = getAuth().currentUser.uid;
+globalThis.saveImportantScore = saveImportantScore;
+
+onAuthStateChanged(getAuth(), (user) => {
+    globalThis.userID = user.uid;
+});
 //getLobbies();
 
 //okay, so the solution is a mutation observer, i can set on up on all lobbies that updates all changed values in the database.

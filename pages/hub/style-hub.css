@@ -4,6 +4,9 @@
 #setup-finish::backdrop {
     background-image: linear-gradient(rgb(80, 0, 126),rgb(0, 12, 124));
 }
+#multiplayer-lobby::backdrop {
+    background-image: linear-gradient(rgb(80, 0, 126),rgb(0, 12, 124));
+}
 #setup-finish h1 {
     line-height: 0%;
 }
@@ -17,8 +20,22 @@
     margin: auto;
     border-radius: 50%;
 }
-#reauthenticate-form {
-    
+#multiplayer-lobby {
+    width: 80%;
+    height: 80%;
+}
+#multiplayer-lobby h1 {
+    text-align: center;
+}
+#lobby-players {
+    background-color: rgb(10, 10, 10);
+    margin: 2%;
+    padding: 1%;
+    height: 30%;
+}
+#lobby-players ul li {
+    text-align: center;
+    font-size: x-large;
 }
 .container {
     display: flex;

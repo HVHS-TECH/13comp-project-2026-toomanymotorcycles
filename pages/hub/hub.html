@@ -70,10 +70,12 @@
         </div>
         <div class="section" id="leaderboards-section">
             <h1>Leaderboards</h1>
-            <p>bring code in from last year</p>
+            <div id="leaderboards-container">
+                <!-- DYNAMICALLY GENERATED WHEN SECTION IS LOADED -->
+            </div>
         </div>
         <div class="section" id="settings-section">
-            <h1>Settings</h1>
+            <h1>Settings (I never finished this but who cares, it's not mission-critical)</h1>
             <hr>
             <h2>Theme</h2>
             <hr>
@@ -172,10 +174,25 @@
         <hr>
         <h2>// JOIN WITH LOBBY CODE</h2>
         <form>
-            <input type="text" placeholder="XXXXXX">
+            <input id="multiplayer-lobby-join-input" type="text" placeholder="XXXXX">
         </form>
         <h1>- or -</h1>
-        <button class="em-button">Create Lobby</button>
+        <button class="em-button" id="multiplayer-lobby-create">Create Lobby</button>
+    </dialog>
+    <dialog id="multiplayer-lobby" closedby="none">
+        <h1 id="lobby-title" style="line-height: 0%;">GAME TITLE</h1>
+        <div style="background-color: rgb(10, 10, 10); padding: 0%; margin: 1%;">
+        <h1 id="lobby-code" style="font-size: 100px; line-height: 100px;">CODE</h1>
+        </div>
+        <h3 style="line-height: 0%;">Players in lobby:</h3>
+        <div id="lobby-players">
+            <ul id="lobby-player-list">
+                <li>PLAYER 1</li>
+                <li>PLAYER 2</li>
+                <li>PLAYER 3</li>
+            </ul>
+        </div>
+        <button class="redwarn" onclick="leaveLobby()">Leave Lobby</button>
     </dialog>
 </body>
 </html>
